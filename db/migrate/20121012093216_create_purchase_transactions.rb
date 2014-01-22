@@ -1,7 +1,7 @@
 class CreatePurchaseTransactions < ActiveRecord::Migration
   def change
     create_table :purchase_transactions do |t|
-      t.belongs_to :user
+      t.belongs_to :user_account
       t.string :product_id, null: false
       t.string :product_name, null: false
       t.text :product_description
@@ -10,6 +10,6 @@ class CreatePurchaseTransactions < ActiveRecord::Migration
       t.string :ref
       t.timestamps
     end
-    add_index :purchase_transactions, :user_id
+    add_index :purchase_transactions, :user_account_id
   end
 end
