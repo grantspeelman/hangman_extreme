@@ -17,27 +17,27 @@ describe UserSendMessage do
     end
 
     it "must send a message to a user if mxit user" do
-      user = stub_model(User, uid: 'm345', provider: 'mxit')
+      user = stub_model(UserAccount, uid: 'm345', provider: 'mxit')
       @mxit_connection.should_receive(:send_message).once.with(body: 'Single user', to: "m345")
       UserSendMessage.new("Single user",[user]).send_all
     end
 
     it "wont send a message to a user if other user" do
-      user = stub_model(User, uid: 'm345', provider: 'other')
+      user = stub_model(UserAccount, uid: 'm345', provider: 'other')
       @mxit_connection.should_not_receive(:send_message)
       UserSendMessage.new("Single user",[user]).send_all
     end
 
     it "must break up users into groups of 100" do
       @mxit_connection.should_receive(:send_message).twice
-      users = create_list(:user, 101)
+      users = create_list(:user_account, 101)
       UserSendMessage.new("Single user",users).send_all
     end
 
     it "must work with relations in groups of 100" do
       @mxit_connection.should_receive(:send_message).twice
-      create_list(:user, 101, provider: 'mxit')
-      UserSendMessage.new("Single user",User.mxit).send_all
+      create_list(:user_account, 101, provider: 'mxit')
+      UserSendMessage.new("Single user",UserAccount.mxit).send_all
     end
 
   end

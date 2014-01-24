@@ -12,12 +12,12 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def current_user
-    @current_user
+  def current_user_account
+    @current_user_account
   end
 
-  def current_user_account
-    current_user.account
+  def current_ability
+    @current_ability ||= Ability.new(current_user_account)
   end
 
   def current_user_request_info
@@ -25,21 +25,17 @@ class ApplicationController < ActionController::Base
   end
 
   def mxit_request?
-    current_user.mxit?
+    current_user_account.try(:mxit?)
   end
 
   def facebook_user?
-    current_user.facebook?
+    current_user_account.try(:facebook?)
   end
 
-  def guest?
-    current_user.guest?
-  end
-
-  helper_method :current_user, :current_user_account, :current_user_request_info, :notify_airbrake, :mxit_request?, :facebook_user?, :guest?
+  helper_method :current_user_account, :current_user_request_info, :notify_airbrake, :mxit_request?, :facebook_user?
 
   def login_required
-    return true if current_user && !guest?
+    return true if current_user_account
     access_denied
   end
 
@@ -49,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def send_stats
-    if tracking_enabled? && current_user && mxit_request? && status != 302
+    if tracking_enabled? && current_user_account && mxit_request? && status != 302
       begin
         Timeout::timeout(15) do
           g = Gabba::Gabba.new(tracking_code, request.host)
@@ -58,10 +54,10 @@ class ApplicationController < ActionController::Base
           g.set_custom_var(1, 'Gender', current_user_request_info.gender || "unknown", 1)
           g.set_custom_var(2, 'Age', current_user_request_info.age || "unknown", 1)
           g.set_custom_var(3, current_user_request_info.country || "unknown Country", current_user_request_info.area || "unknown", 1)
-          g.set_custom_var(5, 'Provider', current_user.provider, 1)
-          g.identify_user(current_user.utma(true))
+          g.set_custom_var(5, 'Provider', current_user_account.provider, 1)
+          g.identify_user(current_user_account.utma(true))
           g.ip(request.remote_ip)
-          g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,current_user.id)
+          g.page_view("#{params[:controller]} #{params[:action]}", request.fullpath,current_user_account.id)
         end
       rescue Timeout::Error => te
         Rails.logger.warn(te.message)
@@ -80,13 +76,13 @@ class ApplicationController < ActionController::Base
     elsif params[:signed_request]
       load_facebook_user
     else # load browser user
-      @current_user = User.find_by(:uid => session[:current_uid],:provider => session[:current_provider]) || User.new(provider: "guest")
+      @current_user_account = UserAccount.find_by(:uid => session[:current_uid],:provider => session[:current_provider])
     end
   end
 
   def set_layout
-    if current_user.try(:provider) == 'developer'
-      current_user.uid == 'mxit' ? 'mxit' : 'mobile'
+    if current_user_account.try(:provider) == 'developer'
+      current_user_account.uid == 'mxit' ? 'mxit' : 'mobile'
     else
       mxit_request? ? 'mxit' : 'mobile'
     end
@@ -94,18 +90,8 @@ class ApplicationController < ActionController::Base
 
   def check_mxit_input_for_redirect
     case request.env["HTTP_X_MXIT_USER_INPUT"]
-     when "extremepayout"
-      redirect_to(mxit_authorise_url(response_type: 'code',
-                                    host: Rails.env.test? ? request.host : "auth.mxit.com",
-                                    protocol: Rails.env.test? ? 'http' : 'https',
-                                    client_id: ENV['MXIT_CLIENT_ID'],
-                                    redirect_uri: mxit_oauth_users_url(host: request.host),
-                                    scope: "contact/invite graph/read",
-                                    state: "winnings"))
       when "profile"
         redirect_to(user_accounts_path) unless params[:controller] == 'user_accounts'
-      when 'winners'
-        redirect_to(winners_path) unless params[:controller] == 'winners'
       when 'airtime vouchers'
         redirect_to(winners_path) unless params[:controller] == 'airtime_vouchers'
     end
@@ -115,7 +101,7 @@ class ApplicationController < ActionController::Base
   private
 
   def load_mxit_user
-    @current_user = User.find_or_create_from_auth_hash(provider: 'mxit',
+    @current_user_account = UserAccount.find_or_create_from_auth_hash(provider: 'mxit',
                                                        uid: request.env['HTTP_X_MXIT_USERID_R'],
                                                        info: { name: request.env['HTTP_X_MXIT_NICK'],
                                                                login: request.env['HTTP_X_MXIT_LOGIN'],
@@ -140,9 +126,9 @@ class ApplicationController < ActionController::Base
     @data = ActiveSupport::JSON.decode(Base64.decode64(encoded_str))
     Rails.logger.info "signed_request: #{@data.inspect}"
     if @data.kind_of?(Hash) && @data['user_id']
-      self.current_user = User.find_facebook_user_by_uid(@data['user_id'])
+      self.current_user_account = UserAccount.find_facebook_user_by_uid(@data['user_id'])
     end
-    if current_user
+    if current_user_account
       true
     else
       redirect_to '/auth/facebook'
@@ -150,8 +136,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def current_user=(user)
-    @current_user = user
+  def current_user_account=(user)
+    @current_user_account = user
     session[:current_uid] = user.try(:uid)
     session[:current_provider] = user.try(:provider)
   end

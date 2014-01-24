@@ -2,24 +2,18 @@ require 'cancan'
 class Ability
   include CanCan::Ability
 
-  def initialize(user)
-    can [:read,:play_letter,:show_clue,:reveal_clue], Game, user_id: user.id
+  def initialize(user_account)
+    can :read, UserAccount
 
-    can :read, Winner
-    can :read, User
+    can :update, user_account
 
-    can :update, user
+    can :read, PurchaseTransaction, user_account_id: user_account.id
+    can :read, RedeemWinning, user_account_id: user_account.id
+    can :read, AirtimeVoucher, user_account_id: user_account.id
+    can :read, Feedback, user_account_id: user_account.id
 
-    can :read, PurchaseTransaction, user_account_id: user.account.id
-    can :read, RedeemWinning, user_account_id: user.account.id
-    can :read, AirtimeVoucher, user_account_id: user.account.id
-    can :read, Feedback, user_id: user.id
-
-    unless user.guest?
-      can :create, PurchaseTransaction
-      can :create, RedeemWinning
-      can :create, Game
-      can :create, Feedback
-    end
+    can :create, PurchaseTransaction
+    can :create, RedeemWinning
+    can :create, Feedback
   end
 end

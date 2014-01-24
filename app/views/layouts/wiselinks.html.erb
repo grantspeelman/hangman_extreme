@@ -2,22 +2,19 @@
 
   <div class="navbar">
     <div class="navbar-inner">
-      <a class="brand" href="#">Hangman Extreme</a>
+      <a class="brand" href="#">Quickapps</a>
       <ul class="nav">
-        <li <% if @game %>class="active"<% end %>>
-          <%= link_to 'Play', play_games_path, class: 'play_game' %>
-        </li>
         <li <% if current_page?(root_path) %>class="active"<% end %>>
           <%= link_to 'Home', root_path, class: 'home' %>
         </li>
-        <% if current_user.guest?  %>
-            <li>
-              <%= link_to 'Login', Rails.env.development? ? '/auth/developer' : '/auth/facebook', class: 'login', 'data-ajax' =>"false", 'data-theme' =>"b" %>
-            </li>
+        <% if current_user_account  %>
+          <li>
+            <%= link_to 'Logout', logout_path, class: 'logout' %>
+          </li>
         <% else %>
-            <li>
-              <%= link_to 'Logout', logout_path, class: 'logout' %>
-            </li>
+          <li>
+            <%= link_to 'Login', Rails.env.development? ? '/auth/developer' : '/auth/facebook', class: 'login', 'data-ajax' =>"false", 'data-theme' =>"b" %>
+          </li>
         <% end %>
       </ul>
     </div>

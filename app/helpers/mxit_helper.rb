@@ -9,7 +9,7 @@ module MxitHelper
                                                  host: Rails.env.test? ? request.host : "auth.mxit.com",
                                                  protocol: Rails.env.test? ? 'http' : 'https',
                                                  client_id: ENV['MXIT_CLIENT_ID'],
-                                                 redirect_uri: mxit_oauth_users_url(host: request.host),
+                                                 redirect_uri: mxit_oauth_user_accounts_url(host: request.host),
                                                  scope: "profile/public profile/private")).html_safe
   end
 

@@ -12,8 +12,8 @@ describe SendFeedbackToUservoice do
   describe "perform" do
 
     before :each do
-      @user = stub_model(User, real_name: "Grant", email: "m123_mxit@noreply.io")
-      @feedback = stub_model(Feedback, subject: 'The message', message: 'long part', user: @user)
+      @user_account = stub_model(UserAccount, real_name: "Grant", email: "m123_mxit@noreply.io")
+      @feedback = stub_model(Feedback, subject: 'The message', message: 'long part', user_account: @user_account)
       Feedback.stub(:find).and_return(@feedback)
       @send_feedback_to_uservoice.stub(:send_suggestion)
     end

@@ -3,18 +3,18 @@ class GoogleTracking < Ohm::Model
   include Ohm::Timestamps
   include Ohm::DataTypes
   include ActiveModel::Dirty
-  define_attribute_methods [:user_id, :initial_visit, :previous_session, :current_session, :last_visit]
+  define_attribute_methods [:user_account_id, :initial_visit, :previous_session, :current_session, :last_visit]
 
-  attribute :user_id
-  index :user_id
-  unique :user_id
+  attribute :user_account_id
+  index :user_account_id
+  unique :user_account_id
   attribute :initial_visit, Type::Time
   attribute :previous_session, Type::Time
   attribute :current_session, Type::Time
   attribute :last_visit, Type::Time
 
   def validate
-    assert_numeric :user_id
+    assert_numeric :user_account_id
   end
 
   def save
@@ -37,14 +37,14 @@ class GoogleTracking < Ohm::Model
 
   def utma(update_tracking = false)
     self.update_tracking if update_tracking
-    utma = "1.#{user_id}00145214523.#{initial_visit.to_i}.#{previous_session.to_i}.#{current_session.to_i}.15"
+    utma = "1.#{user_account_id}00145214523.#{initial_visit.to_i}.#{previous_session.to_i}.#{current_session.to_i}.15"
     "__utma=#{utma};+__utmz=1.#{current_session.to_i}.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none);"
   end
 
-  def self.find_or_create_by_user_id(user_id)
+  def self.find_or_create_by_user_id(user_account_id)
     now = GoogleTracking.time_now
-    find(user_id: user_id.to_s).first ||
-    create(user_id: user_id.to_s,
+    find(user_account_id: user_account_id.to_s).first ||
+    create(user_account_id: user_account_id.to_s,
            current_session: now,
            previous_session: now,
            initial_visit: now,

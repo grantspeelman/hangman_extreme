@@ -9,7 +9,7 @@ describe SessionsController do
   describe "GET 'create'" do
 
     before :each do
-      User.stub(:find_or_create_from_auth_hash)
+      UserAccount.stub(:find_or_create_from_auth_hash)
     end
 
     it "must redirect to root path" do
@@ -19,7 +19,7 @@ describe SessionsController do
 
     it "must find_or_create_from_auth_hash" do
       request.env['omniauth.auth'] = "auth_info"
-      User.should_receive(:find_or_create_from_auth_hash).with("auth_info")
+      UserAccount.should_receive(:find_or_create_from_auth_hash).with("auth_info")
       put 'create', provider: 'test'
     end
 

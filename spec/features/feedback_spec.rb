@@ -34,39 +34,24 @@ shared_examples "a feedbacker" do
 end
 
 describe 'explain', :redis => true do
-
   context "as mxit user", :google_analytics_vcr => true  do
-
     before :each do
-      @current_user = mxit_user('m2604100')
+      @current_user_account = mxit_user_account('m2604100')
       set_mxit_headers('m2604100') # set mxit user
       stub_mxit_oauth
     end
 
     it_behaves_like "a feedbacker"
-
   end
 
   context "as mobile user", :smaato_vcr => true, :js => true do
 
     before :each do
-      @current_user = facebook_user
-      login_facebook_user(@current_user)
+      @current_user_account = facebook_user_account
+      login_facebook_user_account(@current_user_account)
     end
 
     it_behaves_like "a feedbacker"
 
   end
-
-  context "as guest user", :smaato_vcr => true, :js => true do
-
-    it "wont allow you to give feedback" do
-      visit_home
-      click_link('feedback')
-      click_link('support')
-      page.should have_css("div.alert")
-    end
-
-  end
-
 end

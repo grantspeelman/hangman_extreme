@@ -2,13 +2,12 @@ require 'spec_helper'
 
 describe RedeemWinningsController do
   before :each do
-    @current_user = create(:user)
-    @current_user_account = @current_user.account
+    @current_user_account = create(:user_account)
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @ability.can(:manage, :all)
     controller.stub(:current_ability).and_return(@ability)
-    controller.stub(:current_user).and_return(@current_user)
+    controller.stub(:current_user_account).and_return(@current_user_account)
     controller.stub(:send_stats)
   end
 

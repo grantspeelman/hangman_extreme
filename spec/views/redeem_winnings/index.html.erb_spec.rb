@@ -4,8 +4,6 @@ describe "redeem_winnings/index.html.erb" do
   before(:each) do
     @current_user_account = stub_model(UserAccount, id: 50, registered_on_mxit_money?: false)
     view.stub(:current_user_account).and_return(@current_user_account)
-    @current_user = stub_model(User, id: 51)
-    view.stub(:current_user).and_return(@current_user)
     view.stub(:menu_item)
     view.stub(:mxit_request?).and_return(true)
     view.stub(:guest?)
@@ -13,18 +11,6 @@ describe "redeem_winnings/index.html.erb" do
 
   it "should have a airtime vouchers link on menu" do
     view.should_receive(:menu_item).with(anything,airtime_vouchers_path,id: 'airtime_vouchers')
-    render
-  end
-
-  it "should have a view rank link if not guest" do
-    view.stub(:guest?).and_return(false)
-    view.should_receive(:menu_item).with(anything,user_path(51),id: 'view_rank')
-    render
-  end
-
-  it "wont have a view rank link if guest" do
-    view.stub(:guest?).and_return(true)
-    view.should_not_receive(:menu_item).with(anything,user_path(51),id: 'view_rank')
     render
   end
 

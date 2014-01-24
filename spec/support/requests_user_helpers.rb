@@ -1,22 +1,22 @@
-def facebook_user(params_or_uid = '1234567',account_params = {})
-  generate_user('facebook',params_or_uid,account_params)
+def facebook_user_account(params_or_uid = '1234567')
+  generate_user_account('facebook',params_or_uid)
 end
 
-def mxit_user(params_or_uid = 'm2604100')
-  generate_user('mxit',params_or_uid)
+def mxit_user_account(params_or_uid = 'm2604100')
+  generate_user_account('mxit',params_or_uid)
 end
 
-def generate_user(provider,params_or_uid,account_params = {})
+def generate_user_account(provider,params_or_uid)
   if params_or_uid.kind_of?(String)
-    User.find_by_provider_and_uid(provider,params_or_uid) || create(:user, uid: params_or_uid, provider: provider)
+    UserAccount.find_by_provider_and_uid(provider,params_or_uid) || create(:user_account, uid: params_or_uid, provider: provider)
   else
     params = HashWithIndifferentAccess.new(params_or_uid).reverse_merge(uid: '1234567').merge(provider: provider)
-    user = User.find_by_provider_and_uid(provider,params[:uid])
-    if user
-      user.update_attributes(params)
-      user
+    user_account = UserAccount.find_by_provider_and_uid(provider,params[:uid])
+    if user_account
+      user_account.update_attributes(params)
+      user_account
     else
-      create(:user, params).tap{|u| u.account.update_attributes(account_params) }
+      create(:user_account, params)
     end
   end
 end

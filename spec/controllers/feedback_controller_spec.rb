@@ -3,12 +3,12 @@ require 'spec_helper'
 describe FeedbackController do
 
   before :each do
-    @current_user = create(:user)
+    @current_user_account = create(:user_account)
     @ability = Object.new
     @ability.extend(CanCan::Ability)
     @ability.can(:manage, :all)
     controller.stub(:current_ability).and_return(@ability)
-    controller.stub(:current_user).and_return(@current_user)
+    controller.stub(:current_user_account).and_return(@current_user_account)
     controller.stub(:send_stats)
   end
 
@@ -58,7 +58,7 @@ describe FeedbackController do
 
     it "must set feedback to current user" do
       do_create
-      last_feedback.user == @current_user
+      last_feedback.user_account == @current_user_account
     end
 
     it "redirects to home" do

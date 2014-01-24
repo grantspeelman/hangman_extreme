@@ -2,9 +2,8 @@ require 'spec_helper'
 
 describe UserAccountsController do
   before :each do
-    @current_user = create(:user)
-    @current_user_account = @current_user.account
-    controller.stub(:current_user).and_return(@current_user)
+    @current_user_account = create(:user_account)
+    controller.stub(:current_user_account).and_return(@current_user_account)
     controller.stub(:send_stats)
   end
 
@@ -14,7 +13,7 @@ describe UserAccountsController do
       response.should be_success
     end
 
-    it "assigns the requested user as @user" do
+    it "assigns the requested user as @user_account" do
       get 'show'
       assigns(:user_account).should eq(@current_user_account)
     end

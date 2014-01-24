@@ -19,38 +19,14 @@ describe ApplicationController do
     end
 
     it "should find the user" do
-      User.should_receive(:find_by).with(kind_of(Hash)).and_return(stub_model(User, uid: '123', provider: '123'))
+      UserAccount.should_receive(:find_by).with(kind_of(Hash)).and_return(stub_model(UserAccount, uid: '123', provider: '123'))
       get :index
     end
 
     it "wont redirects to root_path if logged_in" do
-      User.stub(:find_by).and_return(stub_model(User, uid: '123', provider: '123'))
+      UserAccount.stub(:find_by).and_return(stub_model(UserAccount, uid: '123', provider: '123'))
       get :index
       response.should be_success
-    end
-  end
-
-  describe "load_guest_user" do
-    before :each do
-      controller.stub(:send_stats)
-    end
-
-    controller do
-      def index
-        render :text => "hello"
-      end
-    end
-
-    it "must assign a guest current_user" do
-      get :index
-      assigns(:current_user).should be_kind_of(User)
-      assigns(:current_user).should be_a_guest
-    end
-
-    it "wont assign a guest current_user if already a user" do
-      request.env['HTTP_X_MXIT_USERID_R'] = 'm2604100'
-      get :index
-      assigns(:current_user).should_not be_a_guest
     end
   end
 
@@ -89,17 +65,17 @@ describe ApplicationController do
       end
 
       it "loads the mxit user into current_user" do
-        User.should_receive(:find_or_create_from_auth_hash).with(uid: 'm2604100',
-                                                                 provider: 'mxit',
-                                                                 info: {name: 'grant',
-                                                                        login: nil,
-                                                                        email: nil})
+        UserAccount.should_receive(:find_or_create_from_auth_hash).with(uid: 'm2604100',
+                                                                   provider: 'mxit',
+                                                                       info: {name: 'grant',
+                                                                             login: nil,
+                                                                             email: nil})
         get :index
       end
 
       it "loads the mxit user into current_user" do
         request.env['HTTP_X_MXIT_LOGIN'] = 'gman'
-        User.should_receive(:find_or_create_from_auth_hash).with(uid: 'm2604100',
+        UserAccount.should_receive(:find_or_create_from_auth_hash).with(uid: 'm2604100',
                                                                  provider: 'mxit',
                                                                  info: {name: 'grant',
                                                                         login: "gman",
@@ -108,9 +84,9 @@ describe ApplicationController do
       end
 
       it "must assign the mxit user" do
-        User.stub(:find_or_create_from_auth_hash).and_return('mxit_user')
+        UserAccount.stub(:find_or_create_from_auth_hash).and_return('mxit_user')
         get :index
-        assigns(:current_user).should == 'mxit_user'
+        assigns(:current_user_account).should == 'mxit_user'
       end
 
       it "must assign the user request info" do
@@ -142,9 +118,9 @@ describe ApplicationController do
     end
 
     it "wont load mxit user if no userid" do
-      User.should_not_receive(:find_or_create_from_auth_hash)
+      UserAccount.should_not_receive(:find_or_create_from_auth_hash)
       get :index
-      assigns(:current_user).should be_a_guest
+      assigns(:current_user_account).should be_nil
     end
   end
 
@@ -156,11 +132,11 @@ describe ApplicationController do
     end
 
     before :each do
-      @user = stub_model(User)
+      @user_account = stub_model(UserAccount, :provider => 'the provider')
       @user_request_info = UserRequestInfo.new
       controller.stub(:tracking_enabled?).and_return(true)
       controller.stub(:mxit_request?).and_return(true)
-      controller.stub(:current_user).and_return(@user)
+      controller.stub(:current_user_account).and_return(@user_account)
       controller.stub(:current_user_request_info).and_return(@user_request_info)
       @gabba = double('connection',
                     :ip => '',
@@ -235,7 +211,7 @@ describe ApplicationController do
     end
 
     it "must send the page view" do
-      @gabba.should_receive(:page_view).with("anonymous index","/anonymous",@user.id)
+      @gabba.should_receive(:page_view).with("anonymous index","/anonymous",@user_account.id)
       get :index
     end
   end
@@ -257,27 +233,9 @@ describe ApplicationController do
     end
 
     it "must redirect to mxit invite if input extremepayout" do
-      request.env['HTTP_X_MXIT_USER_INPUT'] = "extremepayout"
-      get :index
-      response.should redirect_to(mxit_authorise_url(response_type: 'code',
-                                                     host: "test.host",
-                                                     protocol: 'http',
-                                                     client_id: ENV['MXIT_CLIENT_ID'],
-                                                     redirect_uri: mxit_oauth_users_url(host: 'test.host'),
-                                                     scope: "contact/invite graph/read",
-                                                     state: "winnings"))
-    end
-
-    it "must redirect to mxit invite if input extremepayout" do
       request.env['HTTP_X_MXIT_USER_INPUT'] = "profile"
       get :index
       response.should redirect_to(user_accounts_path)
-    end
-
-    it "must redirect to mxit invite if input extremepayout" do
-      request.env['HTTP_X_MXIT_USER_INPUT'] = "winners"
-      get :index
-      response.should redirect_to(winners_path)
     end
   end
 
@@ -286,8 +244,13 @@ describe ApplicationController do
       layout :set_layout
 
       def index
-        render "games/index", layout: true
+        render "user_accounts/show", layout: true
       end
+    end
+
+    before :each do
+      @user_account = stub_model(UserAccount)
+      controller.stub(:current_user_account).and_return(@user_account)
     end
 
     it "must render mobile layout" do
@@ -297,7 +260,7 @@ describe ApplicationController do
 
     it "must render mxit layout" do
       controller.stub(:send_stats)
-      request.env['HTTP_X_MXIT_USERID_R'] = "m123"
+      @user_account.provider = 'mxit'
       get :index
       response.should render_template("layouts/mxit")
     end

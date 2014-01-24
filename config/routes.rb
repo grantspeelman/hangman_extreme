@@ -6,31 +6,12 @@ QuickApp::Application.routes.draw do
   get "explain/:action", as: 'explain', controller: 'explain'
   get "airtime_vouchers", to: 'airtime_vouchers#index', as: 'airtime_vouchers'
 
-  resources :games, :except => [:edit, :update, :destroy] do
-    collection do
-      get 'play', action: "play"
-    end
-    get 'page/:page', :action => :index, :on => :collection
-    member do
-      get 'show_clue', action: "show_clue", as: 'show_clue'
-      post 'show_clue', action: "reveal_clue"
-      get "letter/:letter", action: 'play_letter', as: 'play_letter'
-    end
+  resource :user_accounts, only: [:show, :edit, :update], path: 'profile' do
+    get 'mxit_oauth', action: 'mxit_oauth', as: 'mxit_oauth'
   end
-  resources :users, only: [:show, :index] do
-    collection do
-      get 'my_rank', action: 'show'
-      get 'mxit_oauth', action: 'mxit_oauth', as: 'mxit_oauth'
-      get 'hide_hangman', action: 'hide_hangman', as: 'hide_hangman'
-      get 'show_hangman', action: 'show_hangman', as: 'show_hangman'
-    end
-  end
-  resource :user_accounts, only: [:show, :edit, :update], path: 'profile'
   resources :feedback, path: "user_comments", :except => [:show, :edit, :update, :destroy]
-  resources :winners, :except => [:edit, :update, :create, :new, :destroy]
   resources :redeem_winnings, :except => [:edit, :update, :destroy]
 
-  get '/define/:word', to: 'words#define', as: 'define_word'
   get '/auth/:provider/callback', to: 'sessions#create'
   post '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/:provider/failure', to: 'sessions#failure'
@@ -41,5 +22,5 @@ QuickApp::Application.routes.draw do
   get '/privacy', to: 'explain#privacy', as: 'privacy'
   get '/logout', to: 'sessions#destroy', as: 'logout'
 
-  root :to => 'games#index'
+  root :to => 'explain#about'
 end

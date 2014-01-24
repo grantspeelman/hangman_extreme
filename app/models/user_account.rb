@@ -15,10 +15,35 @@
 #  created_at    :datetime
 #  updated_at    :datetime
 #
+require 'mxit_api'
 
 class UserAccount < ActiveRecord::Base
   validates :provider, :uid, presence: true
   validates_uniqueness_of :uid, :scope => :provider
+
+  scope :mxit, -> { where(:provider => 'mxit') }
+
+  def self.find_or_create_from_auth_hash(auth_hash)
+    auth_hash.stringify_keys!
+    return nil if auth_hash['uid'].blank? || auth_hash['provider'].blank?
+    user_account = find_or_create_by(uid: auth_hash['uid'],provider: auth_hash['provider'])
+    user_account.set_user_account_info(auth_hash['info'])
+    return user_account
+  end
+
+  def set_user_account_info(info)
+    if info
+      info.stringify_keys!
+      self.name = info['name']
+      self.mxit_login = info['login']
+      self.email = info['email'] if email.blank?
+      save
+    end
+  end
+
+  def utma(*args)
+    GoogleTracking.find_or_create_by_user_id(id).utma(*args)
+  end
 
   def registered_on_mxit_money?(connection = MxitMoneyApi.connect(ENV['MXIT_MONEY_API_KEY']))
     begin
@@ -39,5 +64,13 @@ class UserAccount < ActiveRecord::Base
   def use_credit!
     raise 'not enough credits' if credits <= 0
     decrement!(:credits)
+  end
+
+  def mxit?
+    provider == 'mxit'
+  end
+
+  def facebook?
+    provider == 'facebook'
   end
 end

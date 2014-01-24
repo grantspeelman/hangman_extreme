@@ -14,8 +14,8 @@ require "whenever/capistrano"
 require 'new_relic/recipes'
 require 'sidekiq/capistrano'
 
-set :application, "hangman_extreme"
-set :repository, "git@github.com:unboxed/hangman_extreme.git"
+set :application, "quickapps"
+set :repository, "git@github.com:unboxed/quickapps.git"
 
 set :scm, :git
 # set :user, 'user'

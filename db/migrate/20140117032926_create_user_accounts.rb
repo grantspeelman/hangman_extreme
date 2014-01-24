@@ -4,6 +4,7 @@ class CreateUserAccounts < ActiveRecord::Migration
       t.string :uid, :null => false
       t.string :provider, :null => false
       t.string :mxit_login
+      t.string :name
       t.string :real_name
       t.string :mobile_number
       t.string :email

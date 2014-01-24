@@ -1,12 +1,10 @@
 require 'features_helper'
 
 describe 'purchases', :redis => true do
-
   context "as mxit user", :google_analytics_vcr => true do
-
     before :each do
-      @current_user = mxit_user('m2604100')
-      @credits = @current_user.account.credits
+      @current_user_account = mxit_user_account('m2604100')
+      @credits = @current_user_account.credits
       set_mxit_headers('m2604100') # set mxit user
       stub_mxit_oauth # stub mixt profile auth
     end
@@ -32,14 +30,12 @@ describe 'purchases', :redis => true do
       click_link('profile')
       page.should have_content("#{@credits} credits")
     end
-
   end
 
   context "as mobile user", :facebook => true, :smaato_vcr => true, :js => true do
-
     before :each do
-      @current_user = facebook_user
-      login_facebook_user(@current_user)
+      @current_user_account = facebook_user_account
+      login_facebook_user_account(@current_user_account)
     end
 
     it "must not allow user to purchase of clue points" do
@@ -47,17 +43,5 @@ describe 'purchases', :redis => true do
       click_link('buy_credits')
       page.should have_content("Coming soon, credits purchases")
     end
-
   end
-
-  context "as guest user", :smaato_vcr => true, :js => true do
-
-    it "must not allow user to purchase of clue points" do
-      visit_home
-      click_link('buy_credits')
-      page.should have_content("Coming soon, credits purchases")
-    end
-
-  end
-
 end

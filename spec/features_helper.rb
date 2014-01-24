@@ -3,7 +3,6 @@ require 'spec_helper'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
-require 'draper/test/rspec_integration'
 
 require 'support/vcr_helper'
 require 'support/requests_facebook_helper'

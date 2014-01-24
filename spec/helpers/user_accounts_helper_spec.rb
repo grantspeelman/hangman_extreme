@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UsersHelper do
+describe UserAccountsHelper do
 
   context "display_user_name" do
 

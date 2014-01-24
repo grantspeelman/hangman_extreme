@@ -2,9 +2,8 @@ require 'features_helper'
 require 'sidekiq/testing'
 
 shared_examples "a winner redeemer" do
-
   it "must show users redeem winnings link" do
-    @current_user.account.update_attributes(:prize_points => 100)
+    @current_user_account.update_attributes(:prize_points => 100)
     visit_home
     click_link('redeem')
     page.should have_content("Redeeming Winnings")
@@ -25,7 +24,7 @@ shared_examples "a winner redeemer" do
                          :record => :once,
                          :erb => true,
                          :match_requests_on => [:uri,:method]) do
-          @current_user.account.update_attributes(:prize_points => value + 1)
+          @current_user_account.update_attributes(:prize_points => value + 1)
           visit_home
           click_link('redeem')
           page.should have_content("#{value + 1} prize points")
@@ -44,17 +43,13 @@ shared_examples "a winner redeemer" do
         end
       end
     end
-
   end
-
 end
 
 describe 'redeem winnings', :redis => true do
-
   context "as mxit user", :google_analytics_vcr => true do
-
     before :each do
-      @current_user = mxit_user('m2604100')
+      @current_user_account = mxit_user_account('m2604100')
       set_mxit_headers('m2604100') # set mxit user
       stub_mxit_oauth
       stub_mxit_money(:is_registered => true)
@@ -63,7 +58,7 @@ describe 'redeem winnings', :redis => true do
     it_behaves_like "a winner redeemer"
 
     it "must allow to redeem prize points for mxit_money" do
-      @current_user.account.update_attributes(:prize_points => 257)
+      @current_user_account.update_attributes(:prize_points => 257)
       visit_home
       click_link('redeem')
       page.should have_content("257 prize points")
@@ -72,30 +67,14 @@ describe 'redeem winnings', :redis => true do
       click_button('redeem')
       page.should have_content("0 prize points")
     end
-
   end
 
   context "as mobile user",:facebook => true, :smaato_vcr => true, :js => true do
-
     before :each do
-      @current_user = facebook_user
-      login_facebook_user(@current_user)
+      @current_user_account = facebook_user_account
+      login_facebook_user_account(@current_user_account)
     end
 
     it_behaves_like "a winner redeemer"
-
   end
-
-  context "as guest user", :smaato_vcr => true, :js => true do
-
-    it "must show users redeem winnings link" do
-      visit_home
-      click_link('redeem')
-      page.should have_content("Redeeming Winnings")
-      click_link('Home')
-      page.current_path.should == '/'
-    end
-
-  end
-
 end

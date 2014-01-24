@@ -16,7 +16,6 @@ gem 'omniauth-facebook'
 gem 'kaminari'
 gem 'mxit_api', '>= 0.2.2.pre', require: false
 gem 'savon', require: false
-gem 'draper'
 gem 'puma', require: false
 gem 'whenever', require: false
 

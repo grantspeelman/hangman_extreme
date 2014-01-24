@@ -11,7 +11,7 @@ describe MxitApiWrapper do
   context "new" do
 
     it "must make mxit api connection" do
-      options = {grant_type: 'authorization_code', code: "456", redirect_uri: "http://www.hangman_league.dev/users/mxit_oauth"}
+      options = {grant_type: 'authorization_code', code: "456", redirect_uri: "http://www.quickapps.dev/users/mxit_oauth"}
       MxitApi.should_receive(:new).with("1","2",options)
       MxitApiWrapper.new(options)
     end

@@ -14,8 +14,8 @@
 class Feedback < ActiveRecord::Base
   validates :message, presence: true
 
-  belongs_to :user
-  delegate :email, :real_name, :name, to: :user, prefix: true
+  belongs_to :user_account
+  delegate :email, :real_name, :name, to: :user_account, prefix: true
 
   after_commit :send_to_uservoice, :on => :create
 

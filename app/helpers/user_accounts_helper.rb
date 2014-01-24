@@ -1,4 +1,4 @@
-module UsersHelper
+module UserAccountsHelper
 
   def display_user_name(name)
     return "" if name.blank?

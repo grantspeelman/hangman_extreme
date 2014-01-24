@@ -3,8 +3,8 @@ require 'view_spec_helper'
 describe "layouts/mxit" do
 
   before(:each) do
-    @current_user = stub_model(User, id: 50)
-    view.stub(:current_user).and_return(@current_user)
+    @current_user_account = stub_model(UserAccount, id: 50)
+    view.stub(:current_user_account).and_return(@current_user_account)
     view.stub(:current_page?).and_return(false)
     view.stub(:menu)
     view.stub(:shinka_ad)
