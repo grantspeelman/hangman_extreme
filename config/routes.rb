@@ -16,7 +16,7 @@ QuickApp::Application.routes.draw do
   post '/auth/:provider/callback', to: 'sessions#create'
   get '/auth/:provider/failure', to: 'sessions#failure'
   get '/auth/failure', to: 'sessions#failure'
-  get '/authorize', to: 'users#mxit_authorise', as: 'mxit_authorise'
+  get '/authorize', to: 'user_accounts#mxit_authorise', as: 'mxit_authorise'
   get '/about', to: 'explain#about', as: 'about'
   get '/terms', to: 'explain#terms', as: 'terms'
   get '/privacy', to: 'explain#privacy', as: 'privacy'

@@ -30,5 +30,9 @@ describe UserAccountsController do
     it "routes to #update" do
       patch("/profile").should route_to("user_accounts#update")
     end
+
+    it "routes to #mxit_authorise" do
+      get("/authorize").should route_to("user_accounts#mxit_authorise")
+    end
   end
 end
