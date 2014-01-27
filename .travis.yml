@@ -7,7 +7,6 @@ rvm:
   - 2.0.0
 before_script:
   - mkdir -p tmp/cache
-  - cp -f db/words.sample.csv db/words.csv
   - RAILS_ENV=test bundle exec rake travis:create:db
   - cp -f config/database.travis.yml config/database.yml
   - RAILS_ENV=test bundle exec rake db:migrate

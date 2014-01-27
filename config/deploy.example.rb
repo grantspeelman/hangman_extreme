@@ -64,7 +64,6 @@ namespace :app do
   desc "Updates the symlink for database.yml file to the just deployed release."
   task :symlink, :except => {:no_release => true} do
     run "ln -nfs #{shared_path}/database.yml #{release_path}/config/database.yml"
-    upload "./db/words.csv", "#{release_path}/db/words.csv", :via => :scp
   end
 
 end
