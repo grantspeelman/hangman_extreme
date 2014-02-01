@@ -48,7 +48,7 @@ class RedeemWinning < ActiveRecord::Base
     if pending?
       self.class.transaction do
         update_column(:state, 'cancelled')
-        user.increment!(:prize_points,prize_amount)
+        user_account.increment!(:prize_points,prize_amount)
       end
     end
   end
@@ -59,6 +59,10 @@ class RedeemWinning < ActiveRecord::Base
 
   def pending?
     state == 'pending'
+  end
+
+  def cancelled?
+    state == 'cancelled'
   end
 
   def mxit_money?
