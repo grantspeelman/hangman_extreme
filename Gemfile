@@ -18,6 +18,7 @@ gem 'mxit_api', '>= 0.2.2.pre', require: false
 gem 'savon', require: false
 gem 'puma', require: false
 gem 'whenever', require: false
+gem 'grape', require: false
 
 gem 'sidekiq', require: false
 gem 'sinatra', '>= 1.3.0', require: false # for sidekiq

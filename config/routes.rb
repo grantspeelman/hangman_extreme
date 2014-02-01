@@ -1,4 +1,6 @@
 QuickApp::Application.routes.draw do
+  mount V1::Api => '/'
+
   get "purchase_transactions", to: 'purchase_transactions#index', as: 'purchases'
   get "purchase_transactions/new", as: 'new_purchase'
   get "purchase_transactions/create", to: 'purchase_transactions#create', as: 'create_purchase'
