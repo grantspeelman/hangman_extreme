@@ -41,22 +41,6 @@ describe UserAccount do
     end
   end
 
-  describe 'use_credit' do
-    it 'must decrease credits by 1' do
-      user_account = create(:user_account, uid: "xx", provider: "yy", credits: 20)
-      user_account.use_credit!
-      user_account.reload
-      user_account.credits.should == 19
-    end
-
-    it 'will raise an error if 0 credits' do
-      user_account = create(:user_account, uid: "xx", provider: "yy", credits: 0)
-      expect{ user_account.use_credit!}.to raise_error
-      user_account.reload
-      user_account.credits.should == 0
-    end
-  end
-
   describe "registered_on_mxit_money?" do
     before :each do
       @mxit_money_connection = double("connection", :user_info => {:is_registered => false})
