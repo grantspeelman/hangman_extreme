@@ -23,7 +23,6 @@ gem 'grape', require: false
 gem 'sidekiq', require: false
 gem 'sinatra', '>= 1.3.0', require: false # for sidekiq
 gem 'slim', require: false # for sidekiq
-gem 'jazz_hands'
 
 #gem 'backup', :require => false
 #gem 'httparty', :require => false # for backup
@@ -56,6 +55,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :rbx]
   gem 'quiet_assets'
+  gem 'jazz_hands', :platforms=>[:mri_19, :rbx]
 end
 
 group :development, :test do

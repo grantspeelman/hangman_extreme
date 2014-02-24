@@ -205,7 +205,6 @@ describe ApplicationController do
     end
 
     it "must set the user provider" do
-      @user.stub(:provider).and_return("the provider")
       @gabba.should_receive(:set_custom_var).with(5,'Provider','the provider',1)
       get :index
     end
