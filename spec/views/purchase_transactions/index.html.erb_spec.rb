@@ -1,6 +1,6 @@
 require 'view_spec_helper'
 
-describe "purchase_transactions/index.html.erb" do
+describe 'purchase_transactions/index.html.erb' do
 
   before(:each) do
     @current_user_account = stub_model(UserAccount, id: 50)
@@ -11,7 +11,7 @@ describe "purchase_transactions/index.html.erb" do
   end
 
 
-  it "must list all the products that can be purchased" do
+  it 'must list all the products that can be purchased' do
     render
     PurchaseTransaction.products.each do |product_id,hash|
       within("#product_#{product_id}") do
@@ -21,7 +21,7 @@ describe "purchase_transactions/index.html.erb" do
     end
   end
 
-  it "wont list all the products that can be purchased if not mxit request" do
+  it 'wont list all the products that can be purchased if not mxit request' do
     view.stub(:mxit_request?).and_return(false)
     render
     PurchaseTransaction.products.each do |product_id,hash|
@@ -29,7 +29,7 @@ describe "purchase_transactions/index.html.erb" do
     end
   end
 
-  it "should have a profile link on menu unless guest" do
+  it 'should have a profile link on menu unless guest' do
     view.should_receive(:menu_item).with(anything,user_accounts_path,id: 'profile')
     render
   end

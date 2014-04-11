@@ -40,7 +40,7 @@ class ApplicationController < ActionController::Base
   end
 
   def access_denied
-    redirect_to('/', :alert => "You are required to be logged")
+    redirect_to('/', :alert => 'You are required to be logged')
     false
   end
 
@@ -50,10 +50,10 @@ class ApplicationController < ActionController::Base
         Timeout::timeout(15) do
           g = Gabba::Gabba.new(tracking_code, request.host)
           g.user_agent = current_user_request_info.user_agent || request.env['HTTP_USER_AGENT']
-          g.utmul = current_user_request_info.language || "en"
-          g.set_custom_var(1, 'Gender', current_user_request_info.gender || "unknown", 1)
-          g.set_custom_var(2, 'Age', current_user_request_info.age || "unknown", 1)
-          g.set_custom_var(3, current_user_request_info.country || "unknown Country", current_user_request_info.area || "unknown", 1)
+          g.utmul = current_user_request_info.language || 'en'
+          g.set_custom_var(1, 'Gender', current_user_request_info.gender || 'unknown', 1)
+          g.set_custom_var(2, 'Age', current_user_request_info.age || 'unknown', 1)
+          g.set_custom_var(3, current_user_request_info.country || 'unknown Country', current_user_request_info.area || 'unknown', 1)
           g.set_custom_var(5, 'Provider', current_user_account.provider, 1)
           g.identify_user(current_user_account.utma(true))
           g.ip(request.remote_ip)
@@ -89,8 +89,8 @@ class ApplicationController < ActionController::Base
   end
 
   def check_mxit_input_for_redirect
-    case request.env["HTTP_X_MXIT_USER_INPUT"]
-      when "profile"
+    case request.env['HTTP_X_MXIT_USER_INPUT']
+      when 'profile'
         redirect_to(user_accounts_path) unless params[:controller] == 'user_accounts'
       when 'airtime vouchers'
         redirect_to(winners_path) unless params[:controller] == 'airtime_vouchers'
@@ -106,15 +106,15 @@ class ApplicationController < ActionController::Base
                                                        info: { name: request.env['HTTP_X_MXIT_NICK'],
                                                                login: request.env['HTTP_X_MXIT_LOGIN'],
                                                                email: request.env['HTTP_X_MXIT_LOGIN'] && "#{request.env['HTTP_X_MXIT_LOGIN']}@mxit.im"})
-    if request.env["HTTP_X_MXIT_PROFILE"]
-      @mxit_profile = MxitProfile.new(request.env["HTTP_X_MXIT_PROFILE"])
+    if request.env['HTTP_X_MXIT_PROFILE']
+      @mxit_profile = MxitProfile.new(request.env['HTTP_X_MXIT_PROFILE'])
       current_user_request_info.mxit_profile = @mxit_profile
     end
     if request.env['HTTP_X_DEVICE_USER_AGENT']
       current_user_request_info.user_agent = "Mxit #{request.env['HTTP_X_DEVICE_USER_AGENT']}"
     end
-    if request.env["HTTP_X_MXIT_LOCATION"]
-      @mxit_location = MxitLocation.new(request.env["HTTP_X_MXIT_LOCATION"])
+    if request.env['HTTP_X_MXIT_LOCATION']
+      @mxit_location = MxitLocation.new(request.env['HTTP_X_MXIT_LOCATION'])
       current_user_request_info.mxit_location = @mxit_location
     end
   end

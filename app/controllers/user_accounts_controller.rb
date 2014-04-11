@@ -17,7 +17,7 @@ class UserAccountsController < ApplicationController
   end
 
   def mxit_authorise
-    redirect_to action: 'mxit_oauth', code: "MXITAUTH", state: params[:state]
+    redirect_to action: 'mxit_oauth', code: 'MXITAUTH', state: params[:state]
   end
 
   def mxit_oauth
@@ -29,7 +29,7 @@ class UserAccountsController < ApplicationController
                                                  :code => params[:code],
                                                  :redirect_uri => mxit_oauth_user_accounts_url(host: request.host))
         if mxit_connection
-          if mxit_connection.scope.include?("profile")
+          if mxit_connection.scope.include?('profile')
             mxit_user_profile = mxit_connection.profile
             unless mxit_user_profile.empty?
               if current_user_account.real_name.blank?
@@ -44,8 +44,8 @@ class UserAccountsController < ApplicationController
               current_user_account.save
             end
           end
-          if mxit_connection.scope.include?("invite")
-            mxit_connection.send_invite("m40363966002") # mxitid of extremepayout
+          if mxit_connection.scope.include?('invite')
+            mxit_connection.send_invite('m40363966002') # mxitid of extremepayout
           end
         end
       rescue Exception => e

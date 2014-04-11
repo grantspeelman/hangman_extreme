@@ -10,7 +10,7 @@ class UserSendMessage
   def mxit_connection
     return @mxit_connection if @mxit_connection
     @mxit_connection = MxitApiWrapper.connect
-    raise "Could not connect to mxit to send messages" unless @mxit_connection
+    raise 'Could not connect to mxit to send messages' unless @mxit_connection
     @mxit_connection
   end
 
@@ -34,13 +34,14 @@ class UserSendMessage
   end
 
   def self.send(msg,users)
-    new("Your airtime voucher is available in the $airtime vouchers$ section.", users).send_all
+    new('Your airtime voucher is available in the $airtime vouchers$ section.', users).send_all
   end
 
   private
 
   def send_message_to_array(batch)
-    to = batch.delete_if{|u| u.provider != "mxit"}.collect(&:uid).join(",")
+    to = batch.delete_if{|u| u.provider != 'mxit'
+    }.collect(&:uid).join(',')
     mxit_connection.send_message(body: msg, to: to) unless to.blank?
   end
 

@@ -21,14 +21,14 @@ class PurchaseTransactionsController < ApplicationController
       @purchase_transaction.save!
       redirect_to({ action: 'index', mxit_transaction_res: params[:mxit_transaction_res]}, notice: 'Purchase successful')
     else
-      mxit_transaction_text = {1 => "Transaction rejected",
-                               2 => "Authentication Failure",
-                               3 => "Account is locked",
-                               4 => "Insufficient funds",
-                               5 => "Transaction timed out",
-                               6 => "Logged out or Transaction rejected",
-                               -2 => "transaction parameters are not valid",
-                               -1 => "Technical system error occurred"}
+      mxit_transaction_text = {1 => 'Transaction rejected',
+                               2 => 'Authentication Failure',
+                               3 => 'Account is locked',
+                               4 => 'Insufficient funds',
+                               5 => 'Transaction timed out',
+                               6 => 'Logged out or Transaction rejected',
+                               -2 => 'transaction parameters are not valid',
+                               -1 => 'Technical system error occurred'}
       alert_text = mxit_transaction_text[params[:mxit_transaction_res].to_i]
       redirect_to({ action: 'index', mxit_transaction_res: params[:mxit_transaction_res]}, alert: alert_text)
     end

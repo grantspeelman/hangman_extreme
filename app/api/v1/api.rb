@@ -21,13 +21,13 @@ module V1
     end
 
     resource :user_accounts do
-      desc "get Account"
+      desc 'get Account'
       get ':id' do
         authenticate!
         UserAccount.find(params[:id])
       end
 
-      desc "find Accounts"
+      desc 'find Accounts'
       get do
         authenticate!
         user_accounts = UserAccount.all
@@ -37,7 +37,7 @@ module V1
         user_accounts
       end
 
-      desc "Update Account"
+      desc 'Update Account'
       put ':id' do
         authenticate!
         account = UserAccount.find(params[:id])
@@ -45,7 +45,7 @@ module V1
         account
       end
 
-      desc "Create Account"
+      desc 'Create Account'
       post do
         authenticate!
         ua = UserAccount.new(user_params)

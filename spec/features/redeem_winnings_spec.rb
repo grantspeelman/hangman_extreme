@@ -1,13 +1,13 @@
 require 'features_helper'
 require 'sidekiq/testing'
 
-shared_examples "a winner redeemer" do
-  it "must show users redeem winnings link" do
+shared_examples 'a winner redeemer' do
+  it 'must show users redeem winnings link' do
     @current_user_account.update_attributes(:prize_points => 100)
     visit_home
     click_link('redeem')
-    page.should have_content("Redeeming Winnings")
-    page.should have_content("100 prize points")
+    page.should have_content('Redeeming Winnings')
+    page.should have_content('100 prize points')
     click_link('Home')
     page.current_path.should == '/'
   end
@@ -29,9 +29,9 @@ shared_examples "a winner redeemer" do
           click_link('redeem')
           page.should have_content("#{value + 1} prize points")
           click_link("#{provider}_airtime")
-          page.should have_content("R#{value / 100} #{provider.to_s.gsub("_"," ")} airtime")
+          page.should have_content("R#{value / 100} #{provider.to_s.gsub('_', ' ')} airtime")
           click_button('redeem')
-          page.should have_content("1 prize points")
+          page.should have_content('1 prize points')
           click_link('airtime_vouchers')
           page.should have_content('Airtime Vouchers')
           page.should have_no_content("R#{value / 100}")
@@ -47,7 +47,7 @@ shared_examples "a winner redeemer" do
 end
 
 describe 'redeem winnings', :redis => true do
-  context "as mxit user", :google_analytics_vcr => true do
+  context 'as mxit user', :google_analytics_vcr => true do
     before :each do
       @current_user_account = mxit_user_account('m2604100')
       set_mxit_headers('m2604100') # set mxit user
@@ -55,26 +55,26 @@ describe 'redeem winnings', :redis => true do
       stub_mxit_money(:is_registered => true)
     end
 
-    it_behaves_like "a winner redeemer"
+    it_behaves_like 'a winner redeemer'
 
-    it "must allow to redeem prize points for mxit_money" do
+    it 'must allow to redeem prize points for mxit_money' do
       @current_user_account.update_attributes(:prize_points => 257)
       visit_home
       click_link('redeem')
-      page.should have_content("257 prize points")
+      page.should have_content('257 prize points')
       click_link('mxit_money')
-      page.should have_content("R2.57 mxit money")
+      page.should have_content('R2.57 mxit money')
       click_button('redeem')
-      page.should have_content("0 prize points")
+      page.should have_content('0 prize points')
     end
   end
 
-  context "as mobile user",:facebook => true, :smaato_vcr => true, :js => true do
+  context 'as mobile user',:facebook => true, :smaato_vcr => true, :js => true do
     before :each do
       @current_user_account = facebook_user_account
       login_facebook_user_account(@current_user_account)
     end
 
-    it_behaves_like "a winner redeemer"
+    it_behaves_like 'a winner redeemer'
   end
 end

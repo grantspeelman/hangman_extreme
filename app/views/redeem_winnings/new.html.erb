@@ -5,9 +5,9 @@
     for
     <i>
     <% if @redeem_winning.prize_type.include?('airtime') %>
-        R<%= @redeem_winning.prize_amount / 100 %> <%= @redeem_winning.prize_type.gsub("_"," ") %>
+        R<%= @redeem_winning.prize_amount / 100 %> <%= @redeem_winning.prize_type.gsub('_', ' ') %>
     <% elsif @redeem_winning.prize_type.include?('mxit_money') %>
-        <%= number_to_currency(@redeem_winning.prize_amount.to_f / 100, :unit => "R") %> mxit money
+        <%= number_to_currency(@redeem_winning.prize_amount.to_f / 100, :unit => 'R') %> mxit money
     <% else %>
         <%= @redeem_winning.prize_amount %>
     <% end %>
