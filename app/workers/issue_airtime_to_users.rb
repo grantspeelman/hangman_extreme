@@ -12,7 +12,7 @@ class IssueAirtimeToUsers < IssueWinningToUser
     redeem_winning.paid!
     AirtimeVoucher.create!(redeem_winning: redeem_winning, freepaid_refno: freepaid_refno, network: voucher_network,
                            pin: pin, sellvalue: sellvalue, response: response_body, user_account: redeem_winning.user_account)
-    UserSendMessage.send("Your airtime voucher is available in the $airtime vouchers$ section.", [redeem_winning.user_account])
+    UserSendMessage.send('Your airtime voucher is available in the $airtime vouchers$ section.', [redeem_winning.user_account])
   end
 
   private
@@ -22,11 +22,11 @@ class IssueAirtimeToUsers < IssueWinningToUser
   end
 
   def network(redeem_winning)
-    {vodago_airtime: "vodacom",
-     cell_c_airtime: "cellc",
-     mtn_airtime: "mtn",
-     heita_airtime: "heita",
-     virgin_airtime: "branson"}[redeem_winning.prize_type.to_sym]
+    {vodago_airtime: 'vodacom',
+     cell_c_airtime: 'cellc',
+     mtn_airtime: 'mtn',
+     heita_airtime: 'heita',
+     virgin_airtime: 'branson'}[redeem_winning.prize_type.to_sym]
   end
 
   def generate_refno(redeem_winning)

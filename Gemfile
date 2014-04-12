@@ -8,7 +8,7 @@ end
 platforms :ruby do
   gem 'pg'
 end
-gem 'ohm'
+gem 'ohm', '~> 1.3.0'
 gem 'ohm-contrib', require: false
 gem 'cancan', require: false
 gem 'omniauth'
@@ -18,6 +18,7 @@ gem 'mxit_api', '>= 0.2.2.pre', require: false
 gem 'savon', require: false
 gem 'puma', require: false
 gem 'whenever', require: false
+gem 'grape', require: false
 
 gem 'sidekiq', require: false
 gem 'sinatra', '>= 1.3.0', require: false # for sidekiq
@@ -32,7 +33,6 @@ gem 'airbrake'
 gem 'newrelic_rpm'
 gem 'uservoice-ruby', require: false
 gem 'gabba', require: false # google analytics
-gem 'wordnik', require: false
 
 #group :assets do
   platforms :jruby do
@@ -54,6 +54,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :rbx]
   gem 'quiet_assets'
+  gem 'jazz_hands', :platforms=>[:mri_19, :rbx]
 end
 
 group :development, :test do

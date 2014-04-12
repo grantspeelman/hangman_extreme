@@ -21,7 +21,7 @@ FactoryGirl.define do
   factory :purchase_transaction do
     ref {PurchaseTransaction.new.generate_ref}
     product_id {PurchaseTransaction.products.keys.first}
-    product_description "MyText"
+    product_description 'MyText'
     user_account
   end
 end

@@ -21,6 +21,6 @@
 FactoryGirl.define do
   factory :user_account do
     sequence(:uid) {|n| "UID#{n}" }
-    provider "mxit"
+    provider 'mxit'
   end
 end

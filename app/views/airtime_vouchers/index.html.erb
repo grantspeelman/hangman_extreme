@@ -3,7 +3,7 @@
 <% if @airtime_vouchers.any? %>
   <ul>
     <%= content_tag_for(:li, @airtime_vouchers) do |voucher| %>
-      R<%= voucher.sellvalue.to_i %> <%= voucher.network %> airtime: <%= voucher.pin.present? ? voucher.pin : "pending" %>
+      R<%= voucher.sellvalue.to_i %> <%= voucher.network %> airtime: <%= voucher.pin.present? ? voucher.pin : 'pending' %>
     <% end %>
   </ul>
 <% else %>

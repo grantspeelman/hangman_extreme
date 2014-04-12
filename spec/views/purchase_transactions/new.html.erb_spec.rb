@@ -1,6 +1,6 @@
 require 'view_spec_helper'
 
-describe "purchase_transactions/new.html.erb" do
+describe 'purchase_transactions/new.html.erb' do
 
   before(:each) do
     @purchase_transaction = assign(:purchase_transaction,
@@ -10,17 +10,17 @@ describe "purchase_transactions/new.html.erb" do
     render
   end
 
-  it "renders product details" do
+  it 'renders product details' do
     rendered.should have_content('10 points')
     rendered.should have_content('10 moola')
   end
 
-  it "renders a submit button" do
+  it 'renders a submit button' do
     rendered.should have_link('submit')
   end
 
-  it "should have a home link" do
-    rendered.should have_link("cancel", href: purchases_path)
+  it 'should have a home link' do
+    rendered.should have_link('cancel', href: purchases_path)
   end
 
 end

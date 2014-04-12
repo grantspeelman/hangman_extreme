@@ -1,7 +1,7 @@
 require 'features_helper'
 
 describe 'purchases', :redis => true do
-  context "as mxit user", :google_analytics_vcr => true do
+  context 'as mxit user', :google_analytics_vcr => true do
     before :each do
       @current_user_account = mxit_user_account('m2604100')
       @credits = @current_user_account.credits
@@ -9,7 +9,7 @@ describe 'purchases', :redis => true do
       stub_mxit_oauth # stub mixt profile auth
     end
 
-    it "must allow user to purchase credits" do
+    it 'must allow user to purchase credits' do
       visit_home
       click_link('profile')
       page.should have_content("#{@credits} credits")
@@ -20,7 +20,7 @@ describe 'purchases', :redis => true do
       page.should have_content("#{@credits + 11} credits")
     end
 
-    it "must allow user to cancel purchase of clue points" do
+    it 'must allow user to cancel purchase of clue points' do
       visit_home
       click_link('profile')
       page.should have_content("#{@credits} credits")
@@ -32,16 +32,16 @@ describe 'purchases', :redis => true do
     end
   end
 
-  context "as mobile user", :facebook => true, :smaato_vcr => true, :js => true do
+  context 'as mobile user', :facebook => true, :smaato_vcr => true, :js => true do
     before :each do
       @current_user_account = facebook_user_account
       login_facebook_user_account(@current_user_account)
     end
 
-    it "must not allow user to purchase of clue points" do
+    it 'must not allow user to purchase of clue points' do
       visit_home
       click_link('buy_credits')
-      page.should have_content("Coming soon, credits purchases")
+      page.should have_content('Coming soon, credits purchases')
     end
   end
 end

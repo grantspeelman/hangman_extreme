@@ -13,7 +13,7 @@
           </li>
         <% else %>
           <li>
-            <%= link_to 'Login', Rails.env.development? ? '/auth/developer' : '/auth/facebook', class: 'login', 'data-ajax' =>"false", 'data-theme' =>"b" %>
+            <%= link_to 'Login', Rails.env.development? ? '/auth/developer' : '/auth/facebook', class: 'login', 'data-ajax' => 'false', 'data-theme' => 'b' %>
           </li>
         <% end %>
       </ul>

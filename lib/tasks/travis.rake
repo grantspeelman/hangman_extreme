@@ -2,9 +2,9 @@ namespace :travis do
 
   namespace :create do
 
-    desc "create the database for travis ci"
+    desc 'create the database for travis ci'
     task :db do
-      template_yml = File.read("config/database.travis_template.yml")
+      template_yml = File.read('config/database.travis_template.yml')
       case ENV['DB_ADAPTER']
         when 'postgresql'
           puts `psql -c 'create database hangnman_extreme;' -U postgres`
@@ -21,7 +21,7 @@ namespace :travis do
           template_yml.gsub!('%%adapter%%','sqlite3')
           template_yml.gsub!('%%timeout%%','timeout: 15000')
       end
-      File.open("config/database.travis.yml","w"){|fp| fp << template_yml}
+      File.open('config/database.travis.yml', 'w'){|fp| fp << template_yml}
     end
   end
 

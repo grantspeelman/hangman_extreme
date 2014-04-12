@@ -26,7 +26,7 @@ class PurchaseTransaction < ActiveRecord::Base
 
 
   def generate_ref
-    "R#{rand(8999) + 1000}T#{Time.now.strftime("%j%H%M")}UA#{user_account_id}P#{product_id}M#{moola_amount}"
+    "R#{rand(8999) + 1000}T#{Time.now.strftime('%j%H%M')}UA#{user_account_id}P#{product_id}M#{moola_amount}"
   end
 
   def product_id=(v)

@@ -20,6 +20,7 @@ require 'mxit_api'
 class UserAccount < ActiveRecord::Base
   validates :provider, :uid, presence: true
   validates_uniqueness_of :uid, :scope => :provider
+  validates_numericality_of :credits, greater_than_or_equal_to: 0
 
   scope :mxit, -> { where(:provider => 'mxit') }
 
@@ -59,11 +60,6 @@ class UserAccount < ActiveRecord::Base
 
   def not_registered_on_mxit_money?
     !registered_on_mxit_money?
-  end
-
-  def use_credit!
-    raise 'not enough credits' if credits <= 0
-    decrement!(:credits)
   end
 
   def mxit?

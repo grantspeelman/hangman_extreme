@@ -31,7 +31,7 @@ class IssueMxitMoneyToUsers < IssueWinningToUser
   def connection
     return @connection if @connection
     @connection = MxitMoneyApi.connect(ENV['MXIT_MONEY_API_KEY'])
-    raise("Could not connect to Mxit Api") unless @connection
+    raise('Could not connect to Mxit Api') unless @connection
     @connection
   end
 

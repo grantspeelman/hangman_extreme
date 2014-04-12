@@ -70,14 +70,14 @@ class RedeemWinning < ActiveRecord::Base
   end
 
   def airtime?
-    prize_type.include?("airtime")
+    prize_type.include?('airtime')
   end
 
   protected
 
   def check_user_prize_points
     if user_account && prize_amount && user_account_prize_points < prize_amount
-      errors.add(:user_account_id,"does not have enough prize points")
+      errors.add(:user_account_id, 'does not have enough prize points')
     end
   end
 

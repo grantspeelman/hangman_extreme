@@ -12,7 +12,7 @@ class FeedbackController < ApplicationController
   def create
     @feedback.user_account = current_user_account
     @feedback.save
-    redirect_to(root_path, notice: "Thank you for your feedback")
+    redirect_to(root_path, notice: 'Thank you for your feedback')
   end
 
   protected

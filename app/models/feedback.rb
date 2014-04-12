@@ -20,7 +20,7 @@ class Feedback < ActiveRecord::Base
   after_commit :send_to_uservoice, :on => :create
 
   def full_message=(v)
-    self.message, self.subject = v.split(":",2).reverse
+    self.message, self.subject = v.split(':',2).reverse
   end
 
   def full_message

@@ -23,7 +23,7 @@ class RedeemWinningsController < ApplicationController
         @redeem_winning.save!
       end
       if @redeem_winning.prize_type.include?('airtime')
-          notice = "Please make sure you have entered your correct cellphone number on the profile page and allow 48 hours for your airtime to be paid out."
+          notice = 'Please make sure you have entered your correct cellphone number on the profile page and allow 48 hours for your airtime to be paid out.'
       else
         notice = 'prize successful'
       end
