@@ -9,4 +9,12 @@ module ApplicationHelper
       link_to(name,path,options.merge(:data => {:push => true}))
     end
   end
+
+  def hangman_link
+    if mxit_request?
+      "<a href=\"mxit://[mxit_recommend:Refresh]/Referral?from=#{ENV['MXIT_APP_NAME']}&to=#{ENV['HMX_MXIT_APP_NAME']}\" type=\"mxit/service-navigation\">Hangman Extreme</a><br/>"
+    else
+      link_to 'store', ENV['HMX_URL']
+    end
+  end
 end

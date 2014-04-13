@@ -1,13 +1,10 @@
 <h1>Welcome to Quickapps store</h1>
 
-<p>Games you can try out:</p>
-<% if mxit_request? %>
-  <a href="mxit://[communityportal:Refresh]/ReferralPage?ItemId=7297721" type="mxit/service-navigation">Hangman extreme</a>
-<% else %>
-  <%= link_to 'Hangman extreme', 'http://hmx.quickapps.co.za' %>
-<% end %>
-<br/>
+<p>Here you can redeem your prize points and purchase more credits</p>
 
+<p>Games you can try out:</p>
+<%= hangman_link %>
+<br/>
 
 <% if current_user_account %>
   <% menu_item 'profile',mxit_request? ? mxit_auth_url(state: 'profile') : user_accounts_path, id: 'authorise' %>
