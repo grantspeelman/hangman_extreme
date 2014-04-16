@@ -20,7 +20,7 @@ gem 'puma', require: false
 gem 'whenever', require: false
 gem 'grape', require: false
 
-gem 'sidekiq', require: false
+gem 'sidekiq', '~> 2.17', require: false
 gem 'sinatra', '>= 1.3.0', require: false # for sidekiq
 gem 'slim', require: false # for sidekiq
 
@@ -49,7 +49,7 @@ gem 'gabba', require: false # google analytics
 #end
 
 group :development do
-  gem 'capistrano', require: false
+  gem 'capistrano', '~> 2.0', require: false
   gem 'rvm-capistrano', require: false
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :rbx]
