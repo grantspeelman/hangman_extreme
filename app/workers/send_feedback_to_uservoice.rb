@@ -8,7 +8,7 @@ class SendFeedbackToUservoice
   def perform(feedback_id)
     feedback =  Feedback.find(feedback_id)
     send_options = {:email => feedback.user_account_email,
-                    :subject => feedback.subject || feedback.message[0,30],
+                    :subject => "[ACCS] #{feedback.subject || feedback.message[0,30]}",
                     :message => feedback.message,
                     :name => feedback.user_account_real_name || CGI::unescape(feedback.user_account_name).gsub(/[^a-zA-Z0-9\s]/, '')}
     if feedback.support_type == 'suggestion'
