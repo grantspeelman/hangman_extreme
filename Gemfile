@@ -8,7 +8,7 @@ end
 platforms :ruby do
   gem 'pg'
 end
-gem 'ohm', '~> 1.3.0'
+gem 'ohm'
 gem 'ohm-contrib', require: false
 gem 'cancan', require: false
 gem 'omniauth'

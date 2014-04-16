@@ -1,1 +1,1 @@
-Ohm.connect :thread_safe => Rails.env.production?
+# Ohm.connect :thread_safe => Rails.env.production?

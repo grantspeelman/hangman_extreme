@@ -26,7 +26,8 @@ class Settings < Ohm::Model
   end
 
   def self.ga_tracking_disabled_until_setting
-    find(name: 'ga_tracking_disabled_until').first || create(name: 'ga_tracking_disabled_until', value: 0)
+    find(name: 'ga_tracking_disabled_until').first ||
+      create(name: 'ga_tracking_disabled_until', value: 0)
   end
 
   def self.ga_tracking_disabled_until

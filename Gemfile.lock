@@ -160,6 +160,8 @@ GEM
     highline (1.6.21)
     hike (1.2.3)
     hirb (0.7.1)
+    hiredis (0.5.2)
+    hiredis (0.5.2-java)
     http_parser.rb (0.5.3)
     http_parser.rb (0.5.3-java)
     httpi (2.1.0)
@@ -205,6 +207,7 @@ GEM
     mime-types (1.25.1)
     mini_portile (0.5.3)
     minitest (4.7.5)
+    msgpack (0.5.8)
     multi_json (1.9.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -214,8 +217,6 @@ GEM
       i18n (>= 0.5.0)
       i18n (>= 0.5.0)
     mysql2 (0.3.15)
-    nest (1.1.2)
-      redis
     net-scp (1.2.0)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -224,6 +225,7 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     newrelic_rpm (3.7.3.204)
+    nido (0.0.1)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     nokogiri (1.6.1-java)
@@ -236,12 +238,12 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (~> 1.2)
-    ohm (1.3.2)
-      nest (~> 1.0)
-      redis
-      scrivener (~> 0.0.3)
-    ohm-contrib (1.2)
-      ohm (~> 1.2)
+    ohm (2.0.0)
+      msgpack
+      nido
+      redic
+    ohm-contrib (2.0.0)
+      ohm (~> 2.0.0)
     omniauth (1.2.1)
       hashie (>= 1.2, < 3)
       rack (~> 1.0)
@@ -310,6 +312,8 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.2.2)
+    redic (1.1.0)
+      hiredis
     redis (3.0.7)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
@@ -342,7 +346,6 @@ GEM
       nokogiri (>= 1.4.0)
       nori (~> 2.3.0)
       wasabi (~> 3.2.2)
-    scrivener (0.0.3)
     selenium-webdriver (2.41.0)
       childprocess (>= 0.5.0)
       multi_json (~> 1.0)
@@ -463,7 +466,7 @@ DEPENDENCIES
   mxit_api (>= 0.2.2.pre)
   mysql2
   newrelic_rpm
-  ohm (~> 1.3.0)
+  ohm
   ohm-contrib
   omniauth
   omniauth-facebook

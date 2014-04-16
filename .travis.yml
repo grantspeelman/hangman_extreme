@@ -3,7 +3,7 @@ services:
   - redis-server
 rvm:
   - 1.9.3
-  - jruby
+  - rbx-2
   - 2.0.0
 before_script:
   - mkdir -p tmp/cache
