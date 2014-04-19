@@ -16,10 +16,6 @@ namespace :travis do
           template_yml.gsub!('%%username%%','root')
           template_yml.gsub!('%%adapter%%',RUBY_PLATFORM == 'java' ? 'mysql' : 'mysql2')
           template_yml.gsub!('%%timeout%%','')
-        when 'sqlite3'
-          template_yml.gsub!('%%username%%','')
-          template_yml.gsub!('%%adapter%%','sqlite3')
-          template_yml.gsub!('%%timeout%%','timeout: 15000')
       end
       File.open('config/database.travis.yml', 'w'){|fp| fp << template_yml}
     end

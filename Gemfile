@@ -2,9 +2,6 @@ source 'http://rubygems.org'
 
 gem 'rails', '~> 4.0.0'
 
-platforms :jruby do
-  gem 'activerecord-jdbcpostgresql-adapter', '>= 1.3.0', require: false
-end
 platforms :ruby do
   gem 'pg'
 end
@@ -43,25 +40,20 @@ platforms :rbx do
   gem 'psych'
 end
 
-#group :assets do
-  platforms :jruby do
-    gem 'therubyrhino', require: false
-  end
-  platforms :ruby do
-    gem 'libv8', '~> 3.11.8', require: false
-    gem 'therubyracer', require: false
-  end
-  gem 'wiselinks'
-  gem 'uglifier', '>= 1.3.0'
-  gem 'coffee-rails', '~> 4.0.0'
-  gem 'jquery-rails'
-#end
+platforms :ruby do
+  gem 'libv8', '~> 3.11.8', require: false
+  gem 'therubyracer', require: false
+end
+gem 'wiselinks'
+gem 'uglifier', '>= 1.3.0'
+gem 'coffee-rails', '~> 4.0.0'
+gem 'jquery-rails'
 
 group :development do
   gem 'capistrano', '~> 2.0', require: false
   gem 'rvm-capistrano', require: false
   gem 'better_errors'
-  gem 'binding_of_caller', :platforms=>[:mri_19, :rbx]
+  gem 'binding_of_caller'
   gem 'quiet_assets'
 end
 
@@ -73,17 +65,7 @@ group :development, :test do
 end
 
 group :test do
-  platforms :jruby do
-    gem 'jdbc-mysql'
-    gem 'activerecord-jdbcmysql-adapter', '>= 1.3.0', require: false
-    gem 'activerecord-jdbcsqlite3-adapter', '>= 1.3.0', require: false
-    #gem 'activerecord-jdbcpostgresql-adapter', '>= 1.3.0', require: false
-  end
-  platforms :ruby do
-    gem 'mysql2'
-    gem 'sqlite3'
-    #gem 'pg'
-  end
+  gem 'mysql2'
   gem 'test_after_commit'
   gem 'poltergeist', require: false
   gem 'selenium-webdriver', require: false
