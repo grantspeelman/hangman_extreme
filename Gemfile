@@ -18,8 +18,7 @@ gem 'mxit_api', '>= 0.2.2.pre', require: false
 gem 'savon', require: false
 gem 'puma', require: false
 gem 'whenever', require: false
-gem 'grape', require: false
-
+gem 'grape'
 gem 'sidekiq', '~> 2.17', require: false
 gem 'sinatra', '>= 1.3.0', require: false # for sidekiq
 gem 'slim', require: false # for sidekiq
@@ -30,9 +29,13 @@ gem 'slim', require: false # for sidekiq
 
 # third party
 gem 'airbrake'
-gem 'newrelic_rpm'
 gem 'uservoice-ruby', require: false
 gem 'gabba', require: false # google analytics
+
+group :production do
+  gem 'newrelic_rpm'
+  gem 'newrelic-grape'
+end
 
 #group :assets do
   platforms :jruby do
