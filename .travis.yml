@@ -2,9 +2,8 @@ language: ruby
 services:
   - redis-server
 rvm:
-  - 1.9.3
   - rbx-2
-  - 2.0.0
+  - 2.1.0
 before_script:
   - mkdir -p tmp/cache
   - RAILS_ENV=test bundle exec rake travis:create:db

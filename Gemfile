@@ -37,6 +37,12 @@ group :production do
   gem 'newrelic-grape'
 end
 
+platforms :rbx do
+  gem 'racc'
+  gem 'rubysl', '~> 2.0'
+  gem 'psych'
+end
+
 #group :assets do
   platforms :jruby do
     gem 'therubyrhino', require: false
@@ -57,7 +63,6 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :rbx]
   gem 'quiet_assets'
-  gem 'jazz_hands', :platforms=>[:mri_19, :rbx]
 end
 
 group :development, :test do
