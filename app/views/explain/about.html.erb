@@ -1,6 +1,9 @@
 <h1>Welcome to Quickapps store</h1>
 
 <p>Here you can redeem your prize points and purchase more credits</p>
+<% if current_user_account %>
+  <p><%= current_user_account.credits %> credits left</p>
+<% end %>
 
 <p>Games you can try out:</p>
 <%= hangman_link %>

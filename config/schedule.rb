@@ -19,8 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 job_type :bundle_exec, 'cd :path && RAILS_ENV=:environment bundle exec :task :output'
-set :output, "/home/hmx/current/log/cron_log.log"
+set :output, '/home/accounts/current/log/cron_log.log'
 
 every :day, :at => '10:15 pm', :roles => [:db] do
-  runner "Jobs::SetUserCredits.execute"
+  runner 'Jobs::SetUserCredits.execute'
 end
