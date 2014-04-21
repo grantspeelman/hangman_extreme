@@ -12,7 +12,7 @@ shared_examples 'a winner redeemer' do
     page.current_path.should == '/'
   end
 
-  {vodago: [200,500,1000],
+  {vodago: [500,1000,1200],
    cell_c: [500,1000,2500],
    mtn: [500,1000,1500],
    virgin: [1000,1500,3500],

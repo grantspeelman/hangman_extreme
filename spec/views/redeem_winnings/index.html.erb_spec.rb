@@ -59,22 +59,13 @@ describe 'redeem_winnings/index.html.erb' do
   end
 
   context 'vodago airtime' do
-    it 'must have R2 airtime and link' do
-      @current_user_account.prize_points = 200
-      render
-      rendered.should have_content('R2 vodago')
-      rendered.should have_link('vodago_airtime',
-                                href: new_redeem_winning_path(:prize_type => 'vodago_airtime',
-                                                              :prize_amount => 200))
-    end
-
-    it 'must have R5 airtime and link' do
+    it 'must have R% airtime and link' do
       @current_user_account.prize_points = 500
       render
       rendered.should have_content('R5 vodago')
       rendered.should have_link('vodago_airtime',
-                               href: new_redeem_winning_path(:prize_type => 'vodago_airtime',
-                                                             :prize_amount => 500))
+                                href: new_redeem_winning_path(:prize_type => 'vodago_airtime',
+                                                              :prize_amount => 500))
     end
 
     it 'must have R10 airtime and link' do
@@ -86,14 +77,23 @@ describe 'redeem_winnings/index.html.erb' do
                                                              :prize_amount => 1000))
     end
 
-    it 'must have a text if not enough prize points' do
-      @current_user_account.prize_points = 199
+    it 'must have R12 airtime and link' do
+      @current_user_account.prize_points = 1200
       render
-      rendered.should have_content('R2 vodago')
+      rendered.should have_content('R12 vodago')
+      rendered.should have_link('vodago_airtime',
+                               href: new_redeem_winning_path(:prize_type => 'vodago_airtime',
+                                                             :prize_amount => 1200))
+    end
+
+    it 'must have a text if not enough prize points' do
+      @current_user_account.prize_points = 499
+      render
+      rendered.should have_content('R5 vodago')
     end
 
     it 'wont have a link if not enough prize points' do
-      @current_user_account.prize_points = 199
+      @current_user_account.prize_points = 499
       render
       rendered.should_not have_link('vodago_airtime')
     end
