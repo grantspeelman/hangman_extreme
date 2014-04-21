@@ -32,7 +32,7 @@ module V1
         authenticate!
         user_accounts = UserAccount.all
         user_params.each do |key,value|
-          user_accounts = UserAccount.where(key => value)
+          user_accounts = user_accounts.where(key => value)
         end
         user_accounts
       end
