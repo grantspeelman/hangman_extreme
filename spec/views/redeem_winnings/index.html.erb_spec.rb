@@ -45,7 +45,7 @@ describe 'redeem_winnings/index.html.erb' do
 
     it 'wont have a mxit_money link not registered on mxit money' do
       @current_user_account.prize_points = 100
-      @current_user_account.should_receive(:not_registered_on_mxit_money?).and_return(true)
+      @current_user_account.should_receive(:registered_on_mxit_money?).and_return(false)
       render
       rendered.should_not have_link('mxit_money')
     end

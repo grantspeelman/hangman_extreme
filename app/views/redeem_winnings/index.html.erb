@@ -7,7 +7,7 @@ You can redeem your points for:
 
   <% if mxit_request? %>
     <li data-icon="check">
-      <% if current_user_account.not_registered_on_mxit_money? %>
+      <% if !current_user_account.registered_on_mxit_money? %>
         You not Registered on Mxit Money
       <% elsif current_user_account.prize_points == 0 %>
         Mxit Money

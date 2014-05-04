@@ -58,10 +58,6 @@ class UserAccount < ActiveRecord::Base
     end
   end
 
-  def not_registered_on_mxit_money?
-    !registered_on_mxit_money?
-  end
-
   def mxit?
     provider == 'mxit'
   end
