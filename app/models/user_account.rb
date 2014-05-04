@@ -46,7 +46,8 @@ class UserAccount < ActiveRecord::Base
     GoogleTracking.find_or_create_by_user_id(id).utma(*args)
   end
 
-  def registered_on_mxit_money?(connection = MxitMoneyApi.connect(ENV['MXIT_MONEY_API_KEY']))
+  def registered_on_mxit_money?
+    connection = MxitMoneyApi.connect(ENV['MXIT_MONEY_API_KEY'])
     if connection
       result = connection.user_info(:id => uid)
       result[:is_registered]
