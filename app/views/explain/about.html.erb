@@ -3,6 +3,7 @@
 <p>Here you can redeem your prize points and purchase more credits</p>
 <% if current_user_account %>
   <p><%= current_user_account.credits %> credits left</p>
+  <p><%= current_user_account.prize_points %> prize_points</p>
 <% end %>
 
 <p>Games you can try out:</p>
