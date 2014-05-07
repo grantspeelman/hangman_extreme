@@ -2,88 +2,59 @@
 http_interactions:
 - request:
     method: post
-    uri: https://<%= ENV['UV_SUBDOMAIN_NAME'] %>.uservoice.com/api/v1/tickets.json
+    uri: http://<%= ENV['FRESHDESK_API_KEY']  %>:X@ubxdmxitapps.freshdesk.com/helpdesk/tickets.json
     body:
-      encoding: US-ASCII
-      string: "{\"email\":\"m2604100@mxit.im\",\"name\":\" \",\"ticket\":{\"subject\"\
-        :\"I have a support issue for you\",\"message\":\"I have a support issue for\
-        \ you\"}}"
+      encoding: UTF-8
+      string: helpdesk_ticket%5Bdescription%5D=I+have+a+support+issue+for+you&helpdesk_ticket%5Bemail%5D=joe%40bloggs.com&helpdesk_ticket%5Bsubject%5D=%5BACCS%5D+I+have+a+support+issue+for+you
     headers:
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      Api-Client:
-      - uservoice-ruby-0.0.11
       User-Agent:
-      - OAuth gem v0.4.7
-      Content-Length:
-      - '136'
-      Authorization:
-      - OAuth oauth_body_hash="9jkiGu3FC7KsQIGV8Tav5i1OoUg%3D", oauth_consumer_key="000000000000000000000", oauth_nonce="B8uIvTr1Z5nhAmDQRFacy8IjeWxAfQL1AzV7ZsFFNA", oauth_signature="OPlXUKi3ToeASw3pSetspDLZ0DA%3D", oauth_signature_method="HMAC-SHA1", oauth_timestamp="1364725148", oauth_version="1.0"
+      - Faraday v0.9.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
   response:
     status:
       code: 200
       message: OK
     headers:
-      Server:
-      - nginx/1.2.1
-      Date:
-      - Sun, 31 Mar 2013 10:19:10 GMT
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
       Content-Type:
       - application/json; charset=utf-8
+      Etag:
+      - '"939848757315ddaade1ac2760d3c9332"'
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - nginx/1.2.9 + Phusion Passenger 3.0.21
+      Set-Cookie:
+      - _helpkit_session=BAh7BzoPc2Vzc2lvbl9pZCIlZDlmZWNhZTI3MDA0NmE5Yzc4NDkwNWRiOGVmNDkxZGNJIgpmbGFzaAY6BkVGSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhhc2h7BjoLbm90aWNlSSIhVGhlIHRpY2tldCBoYXMgYmVlbiBjcmVhdGVkLgY7BlQGOgpAdXNlZHsGOwhU--42428e079b417ba1385c467ffb6a23e670b9d4ad;
+        path=/; HttpOnly
+      - helpdesk_node_session=696206160691564954f872680af1bc4928b2b556f6454f924432f547a7e8d68fa7ae32990d0b316abe3b7a67c7c5f9f44fc7a0a3d6e3de40fa8ed7a54c906c42;
+        path=/
+      Status:
+      - '200'
+      X-Powered-By:
+      - Phusion Passenger (mod_rails/mod_rack) 3.0.21
+      X-Runtime:
+      - '455'
       Content-Length:
-      - '2635'
+      - '469'
       Connection:
       - keep-alive
-      Status:
-      - 200 OK
-      X-Runtime:
-      - '151'
-      Etag:
-      - "\"26dd57079474d0c78e7b540142444675\""
-      Cache-Control:
-      - private, max-age=0, must-revalidate
-      P3p:
-      - CP="ALL DSP COR CURa ADMa DEVa OUR IND COM NAV"
-      X-Rack-Cache:
-      - invalidate, pass
     body:
-      encoding: US-ASCII
-      string: "{\"ticket\":{\"id\":7364977,\"ticket_number\":304,\"subject\":\"I have\
-        \ a support issue for you\",\"state\":\"open\",\"url\":\"https://uv.uservoice.com/admin/tickets/304\"\
-        ,\"custom_fields\":[],\"messages\":[{\"id\":13327431,\"channel\":\"api\",\"\
-        body\":\"I have a support issue for you\",\"plaintext_body\":\"I have a support\
-        \ issue for you\",\"is_admin_response\":false,\"sender\":{\"id\":34520607,\"\
-        name\":\"m2604100\",\"email\":\"m2604100@mxit.im\",\"title\":null,\"url\"\
-        :\"http://uv.uservoice.com/users/34520607-m2604100\",\"avatar_url\":\"https://secure.gravatar.com/avatar/0a9512e6458528e89b825c613c749564?size=70\\\
-        u0026amp;default=https://cdn.uservoice.com/images/admin/icons/user_70.png\"\
-        ,\"karma_score\":0,\"created_at\":\"2013/03/28 13:24:24 +0000\",\"updated_at\"\
-        :\"2013/03/31 10:19:00 +0000\"},\"attachments\":[],\"created_at\":\"2013/03/31\
-        \ 10:19:10 +0000\",\"updated_at\":\"2013/03/31 10:19:10 +0000\"}],\"notes\"\
-        :[],\"assignee\":{\"id\":29111821,\"name\":\"Unboxed Consulting\",\"email\"\
-        :\"alphen@ubxd.com\",\"title\":\"Web Developer\",\"url\":\"http://uv.uservoice.com/users/29111821-unboxed-consulting\"\
-        ,\"avatar_url\":\"https://secure.gravatar.com/avatar/ae6b8641b4e7ec8ab3398145cd104ab9?size=70\\\
-        u0026amp;default=https://cdn.uservoice.com/images/admin/icons/user_70.png\"\
-        ,\"karma_score\":4,\"created_at\":\"2012/10/10 11:19:56 +0000\",\"updated_at\"\
-        :\"2013/03/30 07:38:58 +0000\"},\"created_by\":{\"id\":34520607,\"name\":\"\
-        m2604100\",\"email\":\"m2604100@mxit.im\",\"title\":null,\"url\":\"http://uv.uservoice.com/users/34520607-m2604100\"\
-        ,\"avatar_url\":\"https://secure.gravatar.com/avatar/0a9512e6458528e89b825c613c749564?size=70\\\
-        u0026amp;default=https://cdn.uservoice.com/images/admin/icons/user_70.png\"\
-        ,\"karma_score\":0,\"created_at\":\"2013/03/28 13:24:24 +0000\",\"updated_at\"\
-        :\"2013/03/31 10:19:00 +0000\"},\"updated_by\":{\"id\":34520607,\"name\":\"\
-        m2604100\",\"email\":\"m2604100@mxit.im\",\"title\":null,\"url\":\"http://uv.uservoice.com/users/34520607-m2604100\"\
-        ,\"avatar_url\":\"https://secure.gravatar.com/avatar/0a9512e6458528e89b825c613c749564?size=70\\\
-        u0026amp;default=https://cdn.uservoice.com/images/admin/icons/user_70.png\"\
-        ,\"karma_score\":0,\"created_at\":\"2013/03/28 13:24:24 +0000\",\"updated_at\"\
-        :\"2013/03/31 10:19:00 +0000\"},\"contact\":{\"id\":34520607,\"name\":\"m2604100\"\
-        ,\"email\":\"m2604100@mxit.im\",\"title\":null,\"url\":\"http://uv.uservoice.com/users/34520607-m2604100\"\
-        ,\"avatar_url\":\"https://secure.gravatar.com/avatar/0a9512e6458528e89b825c613c749564?size=70\\\
-        u0026amp;default=https://cdn.uservoice.com/images/admin/icons/user_70.png\"\
-        ,\"karma_score\":0,\"created_at\":\"2013/03/28 13:24:24 +0000\",\"updated_at\"\
-        :\"2013/03/31 10:19:00 +0000\"},\"last_message_at\":\"2013/03/31 10:19:10\
-        \ +0000\",\"created_at\":\"2013/03/31 10:19:10 +0000\",\"updated_at\":\"2013/03/31\
-        \ 10:19:10 +0000\"}}"
-    http_version:
-  recorded_at: Sun, 31 Mar 2013 10:19:12 GMT
-recorded_with: VCR 2.4.0
+      encoding: UTF-8
+      string: '{"helpdesk_ticket":{"cc_email":{"cc_emails":[],"fwd_emails":[]},"created_at":"2014-05-07T09:03:23+03:00","deleted":false,"delta":true,"description":"I
+        have a support issue for you","description_html":"\u003Cdiv\u003EI have a
+        support issue for you\u003C/div\u003E","display_id":4,"due_by":"2014-05-12T09:03:23+03:00","email_config_id":null,"frDueBy":"2014-05-08T09:03:23+03:00","fr_escalated":false,"group_id":null,"id":1004330953,"isescalated":false,"notes":[],"owner_id":null,"priority":1,"requester_id":1002471758,"responder_id":null,"source":2,"spam":false,"status":2,"subject":"[ACCS]
+        I have a support issue for you","ticket_type":null,"to_email":null,"trained":false,"updated_at":"2014-05-07T09:03:23+03:00","urgent":false,"status_name":"Open","requester_status_name":"Being
+        Processed","priority_name":"Low","source_name":"Portal","requester_name":"Joe","responder_name":"No
+        Agent","to_emails":null,"custom_field":{},"attachments":[]}}'
+    http_version: 
+  recorded_at: Wed, 07 May 2014 06:03:25 GMT
+recorded_with: VCR 2.9.0

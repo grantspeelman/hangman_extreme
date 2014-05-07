@@ -588,6 +588,7 @@ DEPENDENCIES
   flog
   gabba
   grape
+  hashie
   jquery-rails
   kaminari
   launchy

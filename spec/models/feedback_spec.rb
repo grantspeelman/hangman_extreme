@@ -27,13 +27,13 @@ describe Feedback do
   context 'send_to_uservoice' do
 
     after :each do
-      SendFeedbackToUservoice.jobs.clear
+      SendFeedbackToFreshDesk.jobs.clear
     end
 
     it 'must create background job to send to user voice' do
       expect {
         create(:feedback)
-      }.to change(SendFeedbackToUservoice.jobs, :size).by(1)
+      }.to change(SendFeedbackToFreshDesk.jobs, :size).by(1)
     end
 
   end

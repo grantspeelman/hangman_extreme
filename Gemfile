@@ -19,6 +19,7 @@ gem 'grape'
 gem 'sidekiq', '~> 2.17', require: false
 gem 'sinatra', '>= 1.3.0', require: false # for sidekiq
 gem 'slim', require: false # for sidekiq
+gem 'hashie'
 
 #gem 'backup', :require => false
 #gem 'httparty', :require => false # for backup
