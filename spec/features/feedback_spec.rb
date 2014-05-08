@@ -2,7 +2,6 @@ require 'features_helper'
 require 'support/vcr_helper'
 
 shared_examples 'a feedbacker' do
-
   it 'must allow to send support feedback' do
     VCR.use_cassette('support_feedback',
                      :record => :once,
@@ -45,13 +44,11 @@ describe 'explain', :redis => true do
   end
 
   context 'as mobile user', :smaato_vcr => true, :js => true do
-
     before :each do
       @current_user_account = facebook_user_account
       login_facebook_user_account(@current_user_account)
     end
 
     it_behaves_like 'a feedbacker'
-
   end
 end

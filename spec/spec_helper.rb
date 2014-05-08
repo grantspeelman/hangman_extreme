@@ -12,6 +12,7 @@ ENV['FREEPAID_USER'] ||= '1'
 ENV['FREEPAID_PASS'] ||= '1'
 ENV['MXIT_VENDOR_ID'] ||= '1'
 ENV['SESSION_TOKEN'] ||= ('a' * 31)
+ENV['FRESHDESK_API_KEY'] ||= '1'
 
 if (ENV['COVERAGE'] == 'on')
   require 'simplecov'
