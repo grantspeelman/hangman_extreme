@@ -66,12 +66,11 @@ group :development, :test do
 end
 
 group :test do
-  gem 'mysql2'
   gem 'test_after_commit'
   gem 'poltergeist', require: false
   gem 'selenium-webdriver', require: false
   gem 'capybara', '~> 2.0.0', require: false
-  gem 'database_cleaner', '~> 1.1.1', :git => 'https://github.com/tommeier/database_cleaner', ref: 'b0c666e'
+  gem 'database_cleaner'
   gem 'launchy', require: false
   gem 'simplecov', require: false
   gem 'simplecov-rcov', require: false

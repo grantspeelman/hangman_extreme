@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140122150229) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "airtime_vouchers", force: true do |t|
     t.integer  "redeem_winning_id"
     t.integer  "user_account_id"
