@@ -26,7 +26,7 @@ gem 'hashie'
 #gem 'dropbox-sdk', :require => false  # for backup
 
 # third party
-gem 'airbrake'
+gem 'airbrake', '3.1.16'
 gem 'uservoice-ruby', require: false
 gem 'gabba', require: false # google analytics
 
@@ -71,12 +71,11 @@ group :test do
   gem 'poltergeist', require: false
   gem 'selenium-webdriver', require: false
   gem 'capybara', '~> 2.0.0', require: false
-  gem 'database_cleaner', "~> 1.1.1", :git => 'https://github.com/tommeier/database_cleaner', ref: 'b0c666e'
+  gem 'database_cleaner', '~> 1.1.1', :git => 'https://github.com/tommeier/database_cleaner', ref: 'b0c666e'
   gem 'launchy', require: false
   gem 'simplecov', require: false
   gem 'simplecov-rcov', require: false
   gem 'flog', require: false
-#  gem 'spork-rails'
   gem 'webmock', require: false
   gem 'vcr', require: false
   gem 'coveralls', require: false
