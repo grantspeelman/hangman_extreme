@@ -12,8 +12,12 @@ shared_examples 'a registered user' do
     click_link('edit_mobile_number')
     fill_in 'user_account_mobile_number', with: '0821234561'
     click_button 'submit'
+    click_link('edit_email')
+    fill_in 'user_account_email', with: 'grant@mail.com'
+    click_button 'submit'
     page.should have_content('Joe Barber')
     page.should have_content('0821234561')
+    page.should have_content('grant@mail.com')
     click_link('Home')
     page.current_path.should == '/'
   end

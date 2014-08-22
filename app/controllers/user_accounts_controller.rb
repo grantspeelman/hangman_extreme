@@ -71,6 +71,6 @@ class UserAccountsController < ApplicationController
   end
 
   def user_params
-    params[:user_account].permit(:real_name, :mobile_number)
+    params[:user_account].permit(:real_name, :mobile_number, :email)
   end
 end

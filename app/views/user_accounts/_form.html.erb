@@ -1,7 +1,10 @@
 <%= form_for(@user_account, url: user_accounts_path) do |f| %>
     <% if params[:field] == 'real_name' %>
-        Enter your Real name
-        <%= f.text_field :real_name %>
+      Enter your Real name
+      <%= f.text_field :real_name %>
+    <% elsif params[:field] == 'email' %>
+      Enter your email address
+      <%= f.text_field :email %>
     <% else %>
         Enter your Mobile number
         <%= f.text_field :mobile_number %>

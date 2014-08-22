@@ -11,7 +11,7 @@ QuickApp::Application.routes.draw do
   resource :user_accounts, only: [:show, :edit, :update], path: 'profile' do
     get 'mxit_oauth', action: 'mxit_oauth', as: 'mxit_oauth'
   end
-  resources :feedback, path: "user_comments", :except => [:show, :edit, :update, :destroy]
+  resources :feedback, :except => [:show, :edit, :update, :destroy]
   resources :redeem_winnings, :except => [:edit, :update, :destroy]
 
   get '/auth/:provider/callback', to: 'sessions#create'
