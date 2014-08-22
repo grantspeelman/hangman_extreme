@@ -30,10 +30,7 @@ class Feedback < ActiveRecord::Base
   protected
 
   def send_to_uservoice
-    SendFeedbackToFreshDesk.new.perform(id)
-  rescue
-    SendFeedbackToFreshDesk.perform_async(id)
+    SendFeedbackToUservoice.new.perform(self)
   end
-
 end
 
