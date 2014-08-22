@@ -1,9 +1,11 @@
+require 'uservoice-ruby'
+
 class SendFeedbackToUservoice
   def perform(feedback)
-    send_options = {:email => feedback.user_email,
+    send_options = {:email => feedback.user_account_email,
                     :subject => "[#{ENV['MXIT_APP_NAME']}] #{feedback.subject}",
                     :message => feedback.message,
-                    :name => feedback.user_real_name || CGI::unescape(feedback.user_name.to_s).gsub(/[^a-zA-Z0-9\s]/, '')}
+                    :name => feedback.user_account_real_name || CGI::unescape(feedback.user_account_name.to_s).gsub(/[^a-zA-Z0-9\s]/, '')}
     if feedback.support_type == 'suggestion'
       send_suggestion(send_options)
     else
