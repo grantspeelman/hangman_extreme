@@ -3,9 +3,7 @@ module MenuHelper
   def menu_items
     return @menu_items if @menu_items
     @menu_items = []
-    if mxit_request?
-      @menu_items << ['Home', root_path, id: 'home'] unless current_page?(root_path)
-    end
+    @menu_items << ['Home', root_path, id: 'home'] unless current_page?(root_path)
     @menu_items
   end
 
@@ -17,7 +15,7 @@ module MenuHelper
     items = menu_items.clone
     grouped_items = []
     while(!items.empty?)
-      if items.size == 1 || (items[0].first.size + items[1].first.size > 20) || !mxit_request?
+      if items.size == 1 || (items[0].first.size + items[1].first.size > 20)
         grouped_items << [items[0]]
         items.shift
       else

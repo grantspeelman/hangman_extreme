@@ -4,7 +4,7 @@ Quickapps
 Live at http://hmx.quickapps.co.za
 
 
-The Unboxed user platform for the MXit platform and facebook
+The Unboxed user platform for the MXit platform
 
 Developer setup
 ===============

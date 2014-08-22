@@ -1,7 +1,6 @@
 require 'view_spec_helper'
 
-describe 'layouts/mxit' do
-
+describe 'layouts/application' do
   before(:each) do
     @current_user_account = stub_model(UserAccount, id: 50)
     view.stub(:current_user_account).and_return(@current_user_account)
@@ -9,7 +8,6 @@ describe 'layouts/mxit' do
     view.stub(:menu)
     view.stub(:shinka_ad)
   end
-
 
   it 'should a menu' do
     view.stub(:menu).and_return('--MENU--')
@@ -22,5 +20,4 @@ describe 'layouts/mxit' do
     render
     rendered.should have_content('--AD--')
   end
-
 end

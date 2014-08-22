@@ -6,7 +6,6 @@ describe 'purchase_transactions/index.html.erb' do
     @current_user_account = stub_model(UserAccount, id: 50)
     view.stub(:current_user_account).and_return(@current_user_account)
     view.stub(:menu_item)
-    view.stub(:mxit_request?).and_return(true)
     PurchaseTransaction.stub(:purchases_enabled?).and_return(true)
   end
 
@@ -21,15 +20,7 @@ describe 'purchase_transactions/index.html.erb' do
     end
   end
 
-  it 'wont list all the products that can be purchased if not mxit request' do
-    view.stub(:mxit_request?).and_return(false)
-    render
-    PurchaseTransaction.products.each do |product_id,hash|
-      rendered.should_not have_link("buy_#{product_id}", href: new_purchase_path(product_id: product_id))
-    end
-  end
-
-  it 'should have a profile link on menu unless guest' do
+  it 'should have a profile link on menu' do
     view.should_receive(:menu_item).with(anything,user_accounts_path,id: 'profile')
     render
   end

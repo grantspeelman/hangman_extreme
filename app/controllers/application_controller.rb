@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :load_user, :check_mxit_input_for_redirect
   after_filter :send_stats
-  layout :set_layout
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
@@ -24,20 +23,7 @@ class ApplicationController < ActionController::Base
     @current_user_request_info ||= UserRequestInfo.new
   end
 
-  def mxit_request?
-    current_user_account.try(:mxit?)
-  end
-
-  def facebook_user?
-    current_user_account.try(:facebook?)
-  end
-
-  helper_method :current_user_account, :current_user_request_info, :notify_airbrake, :mxit_request?, :facebook_user?
-
-  def login_required
-    return true if current_user_account
-    access_denied
-  end
+  helper_method :current_user_account, :current_user_request_info, :notify_airbrake
 
   def access_denied
     redirect_to('/', :alert => 'You are required to be logged')
@@ -45,7 +31,7 @@ class ApplicationController < ActionController::Base
   end
 
   def send_stats
-    if tracking_enabled? && current_user_account && mxit_request? && status != 302
+    if tracking_enabled? && current_user_account && status != 302
       begin
         Timeout::timeout(15) do
           g = Gabba::Gabba.new(tracking_code, request.host)
@@ -71,20 +57,21 @@ class ApplicationController < ActionController::Base
   end
 
   def load_user
-    if request.env['HTTP_X_MXIT_USERID_R'] # load mxit user
-      load_mxit_user
-    elsif params[:signed_request]
-      load_facebook_user
-    else # load browser user
-      @current_user_account = UserAccount.find_by(:uid => session[:current_uid],:provider => session[:current_provider])
+    @current_user_account = UserAccount.find_or_create_from_auth_hash(provider: 'mxit',
+                                                                      uid: request.env['HTTP_X_MXIT_USERID_R'],
+                                                                      info: { name: request.env['HTTP_X_MXIT_NICK'],
+                                                                              login: request.env['HTTP_X_MXIT_LOGIN'],
+                                                                              email: request.env['HTTP_X_MXIT_LOGIN'] && "#{request.env['HTTP_X_MXIT_LOGIN']}@mxit.im"})
+    if request.env['HTTP_X_MXIT_PROFILE']
+      @mxit_profile = MxitProfile.new(request.env['HTTP_X_MXIT_PROFILE'])
+      current_user_request_info.mxit_profile = @mxit_profile
     end
-  end
-
-  def set_layout
-    if current_user_account.try(:provider) == 'developer'
-      current_user_account.uid == 'mxit' ? 'mxit' : 'mobile'
-    else
-      mxit_request? ? 'mxit' : 'mobile'
+    if request.env['HTTP_X_DEVICE_USER_AGENT']
+      current_user_request_info.user_agent = "Mxit #{request.env['HTTP_X_DEVICE_USER_AGENT']}"
+    end
+    if request.env['HTTP_X_MXIT_LOCATION']
+      @mxit_location = MxitLocation.new(request.env['HTTP_X_MXIT_LOCATION'])
+      current_user_request_info.mxit_location = @mxit_location
     end
   end
 
@@ -100,42 +87,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def load_mxit_user
-    @current_user_account = UserAccount.find_or_create_from_auth_hash(provider: 'mxit',
-                                                       uid: request.env['HTTP_X_MXIT_USERID_R'],
-                                                       info: { name: request.env['HTTP_X_MXIT_NICK'],
-                                                               login: request.env['HTTP_X_MXIT_LOGIN'],
-                                                               email: request.env['HTTP_X_MXIT_LOGIN'] && "#{request.env['HTTP_X_MXIT_LOGIN']}@mxit.im"})
-    if request.env['HTTP_X_MXIT_PROFILE']
-      @mxit_profile = MxitProfile.new(request.env['HTTP_X_MXIT_PROFILE'])
-      current_user_request_info.mxit_profile = @mxit_profile
-    end
-    if request.env['HTTP_X_DEVICE_USER_AGENT']
-      current_user_request_info.user_agent = "Mxit #{request.env['HTTP_X_DEVICE_USER_AGENT']}"
-    end
-    if request.env['HTTP_X_MXIT_LOCATION']
-      @mxit_location = MxitLocation.new(request.env['HTTP_X_MXIT_LOCATION'])
-      current_user_request_info.mxit_location = @mxit_location
-    end
-  end
-
-  def load_facebook_user
-    encoded_sig, payload = params[:signed_request].split('.')
-    encoded_str = payload.gsub('-','+').gsub('_','/')
-    encoded_str += '=' while !(encoded_str.size % 4).zero?
-    @data = ActiveSupport::JSON.decode(Base64.decode64(encoded_str))
-    Rails.logger.info "signed_request: #{@data.inspect}"
-    if @data.kind_of?(Hash) && @data['user_id']
-      self.current_user_account = UserAccount.find_facebook_user_by_uid(@data['user_id'])
-    end
-    if current_user_account
-      true
-    else
-      redirect_to '/auth/facebook'
-      false
-    end
-  end
-
   def current_user_account=(user)
     @current_user_account = user
     session[:current_uid] = user.try(:uid)
@@ -150,5 +101,4 @@ class ApplicationController < ActionController::Base
   def tracking_code
     ENV['GA_TRACKING_CODE']
   end
-
 end

@@ -3,7 +3,6 @@ require 'view_spec_helper'
 describe 'feedback/index.html.erb' do
 
   before(:each) do
-    view.stub(:mxit_request?).and_return(true)
     view.stub(:menu_item)
   end
 

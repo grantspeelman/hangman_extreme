@@ -56,12 +56,4 @@ class UserAccount < ActiveRecord::Base
     Airbrake.notify_or_ignore(e,:parameters => {:user => self, :connection => connection})
     false
   end
-
-  def mxit?
-    provider == 'mxit'
-  end
-
-  def facebook?
-    provider == 'facebook'
-  end
 end

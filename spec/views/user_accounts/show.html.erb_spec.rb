@@ -4,7 +4,6 @@ describe 'user_accounts/show.html.erb' do
   before(:each) do
     @user_account = stub_model(UserAccount, real_name: 'Grant Petersen', mobile_number: '123', credits: 20)
     view.stub(:current_user_account).and_return(@user_account)
-    view.stub(:mxit_request?).and_return(true)
     view.stub(:menu_item)
   end
 

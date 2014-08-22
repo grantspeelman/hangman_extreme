@@ -5,18 +5,11 @@ describe 'redeem_winnings/index.html.erb' do
     @current_user_account = stub_model(UserAccount, id: 50, registered_on_mxit_money?: false)
     view.stub(:current_user_account).and_return(@current_user_account)
     view.stub(:menu_item)
-    view.stub(:mxit_request?).and_return(true)
-    view.stub(:guest?)
   end
 
   it 'should have a airtime vouchers link on menu' do
     view.should_receive(:menu_item).with(anything,airtime_vouchers_path,id: 'airtime_vouchers')
     render
-  end
-
-  it 'must have a link to scoring categories' do
-    render
-    rendered.should have_link('Read',href: explain_path('scoring_categories'))
   end
 
   context 'mxit money' do

@@ -68,13 +68,4 @@ describe 'redeem winnings', :redis => true do
       page.should have_content('0 prize points')
     end
   end
-
-  context 'as mobile user',:facebook => true, :smaato_vcr => true, :js => true do
-    before :each do
-      @current_user_account = facebook_user_account
-      login_facebook_user_account(@current_user_account)
-    end
-
-    it_behaves_like 'a winner redeemer'
-  end
 end

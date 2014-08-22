@@ -39,13 +39,4 @@ describe 'user accounts', :redis => true do
       page.current_path.should == user_accounts_path
     end
   end
-
-  context 'as mobile user', :facebook => true, :smaato_vcr => true, :js => true do
-    before :each do
-      @current_user_account = facebook_user_account(:real_name => 'Grant Speelman', :mobile_number => '0821234567')
-      login_facebook_user_account(@current_user_account)
-    end
-
-    it_behaves_like 'a registered user'
-  end
 end

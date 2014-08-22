@@ -1,35 +1,6 @@
 require 'spec_helper'
 
 describe ApplicationController do
-  describe 'login required' do
-    before :each do
-      controller.stub(:send_stats)
-    end
-
-    controller do
-      before_filter :login_required
-      def index
-        render :text => 'hello'
-      end
-    end
-
-    it 'must redirects to root_path if not user_id' do
-      get :index
-      response.should redirect_to(root_path)
-    end
-
-    it 'should find the user' do
-      UserAccount.should_receive(:find_by).with(kind_of(Hash)).and_return(stub_model(UserAccount, uid: '123', provider: '123'))
-      get :index
-    end
-
-    it 'wont redirects to root_path if logged_in' do
-      UserAccount.stub(:find_by).and_return(stub_model(UserAccount, uid: '123', provider: '123'))
-      get :index
-      response.should be_success
-    end
-  end
-
   describe 'handling CanCan AccessDenied exceptions' do
     controller do
       def index
@@ -116,12 +87,6 @@ describe ApplicationController do
       end
 
     end
-
-    it 'wont load mxit user if no userid' do
-      UserAccount.should_not_receive(:find_or_create_from_auth_hash)
-      get :index
-      assigns(:current_user_account).should be_nil
-    end
   end
 
   describe 'sending stats' do
@@ -135,7 +100,6 @@ describe ApplicationController do
       @user_account = stub_model(UserAccount, :provider => 'the provider')
       @user_request_info = UserRequestInfo.new
       controller.stub(:tracking_enabled?).and_return(true)
-      controller.stub(:mxit_request?).and_return(true)
       controller.stub(:current_user_account).and_return(@user_account)
       controller.stub(:current_user_request_info).and_return(@user_request_info)
       @gabba = double('connection',
@@ -151,12 +115,6 @@ describe ApplicationController do
 
     it 'wont create a new gabba connection if being redirected' do
       controller.stub(:status).and_return(302)
-      Gabba::Gabba.should_not_receive(:new)
-      get :index
-    end
-
-    it 'wont create a new gabba connection if not mxit request' do
-      controller.stub(:mxit_request?).and_return(false)
       Gabba::Gabba.should_not_receive(:new)
       get :index
     end
@@ -240,28 +198,15 @@ describe ApplicationController do
 
   describe 'it uses correct layout' do
     controller do
-      layout :set_layout
-
       def index
         render 'user_accounts/show', layout: true
       end
     end
 
-    before :each do
-      @user_account = stub_model(UserAccount)
-      controller.stub(:current_user_account).and_return(@user_account)
-    end
-
-    it 'must render mobile layout' do
-      get :index
-      response.should render_template('layouts/mobile')
-    end
-
     it 'must render mxit layout' do
       controller.stub(:send_stats)
-      @user_account.provider = 'mxit'
       get :index
-      response.should render_template('layouts/mxit')
+      response.should render_template('layouts/application')
     end
   end
 end

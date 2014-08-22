@@ -1,26 +1,22 @@
 <b>Redeeming Winnings</b><br/>
 <p>You have <%= current_user_account.prize_points %> prize points.
-<%= smart_link_to 'Read here', explain_path('scoring_categories') %> about winning more prize points.</p>
 You can redeem your points for:
 <% index = 0 %>
 <ul data-role="listview" data-inset="true">
-
-  <% if mxit_request? %>
-    <li data-icon="check">
-      <% if !current_user_account.registered_on_mxit_money? %>
-        You not Registered on Mxit Money
-      <% elsif current_user_account.prize_points == 0 %>
-        Mxit Money
-      <% elsif Settings.mxit_money_disabled_until > Time.current %>
-        More Mxit Money Available on <%= Date.current.end_of_month.strftime('%d %b') %>
-      <% else %>
-        <%= smart_link_to "#{(index += 1)} #{number_to_currency(current_user_account.prize_points.to_f / 100, :unit => 'R')} mxit money",
-                      new_redeem_winning_path(:prize_type => 'mxit_money',
-                                              :prize_amount => current_user_account.prize_points),
-                      id: 'mxit_money' %>
-      <% end %>
-    </li>
-  <% end %>
+  <li data-icon="check">
+    <% if !current_user_account.registered_on_mxit_money? %>
+      You not Registered on Mxit Money
+    <% elsif current_user_account.prize_points == 0 %>
+      Mxit Money
+    <% elsif Settings.mxit_money_disabled_until > Time.current %>
+      More Mxit Money Available on <%= Date.current.end_of_month.strftime('%d %b') %>
+    <% else %>
+      <%= smart_link_to "#{(index += 1)} #{number_to_currency(current_user_account.prize_points.to_f / 100, :unit => 'R')} mxit money",
+                    new_redeem_winning_path(:prize_type => 'mxit_money',
+                                            :prize_amount => current_user_account.prize_points),
+                    id: 'mxit_money' %>
+    <% end %>
+  </li>
 
   <% {vodago: [500,1000,1200],
       cell_c: [500,1000,2500],

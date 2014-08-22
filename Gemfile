@@ -8,8 +8,6 @@ end
 gem 'ohm', '~> 1.3.0'
 gem 'ohm-contrib', require: false
 gem 'cancan', require: false
-gem 'omniauth'
-gem 'omniauth-facebook'
 gem 'kaminari'
 gem 'mxit_api', '>= 0.2.2.pre', require: false
 gem 'savon', require: false
@@ -29,6 +27,7 @@ gem 'hashie'
 gem 'airbrake', '3.1.16'
 gem 'uservoice-ruby', require: false
 gem 'gabba', require: false # google analytics
+gem 'faraday'
 
 group :production do
   gem 'newrelic_rpm'
@@ -45,10 +44,8 @@ platforms :ruby do
   gem 'libv8', '~> 3.11.8', require: false
   gem 'therubyracer', require: false
 end
-gem 'wiselinks'
+
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.0'
-gem 'jquery-rails'
 
 group :development do
   gem 'capistrano', '~> 2.0', require: false

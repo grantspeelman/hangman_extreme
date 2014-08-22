@@ -3,7 +3,7 @@
 <p>You have currently have <b><%= current_user_account.credits %></b> credits.
 All Players will be updated to 50 credits a day unless you have more</p>
 
-<% if mxit_request? && PurchaseTransaction.purchases_enabled? %>
+<% if PurchaseTransaction.purchases_enabled? %>
 <ul>
     <% PurchaseTransaction.products.each_with_index do |product,index| %>
         <% product_id, hash = product %>

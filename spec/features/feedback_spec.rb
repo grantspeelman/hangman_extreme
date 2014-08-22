@@ -42,13 +42,4 @@ describe 'explain', :redis => true do
 
     it_behaves_like 'a feedbacker'
   end
-
-  context 'as mobile user', :smaato_vcr => true, :js => true do
-    before :each do
-      @current_user_account = facebook_user_account
-      login_facebook_user_account(@current_user_account)
-    end
-
-    it_behaves_like 'a feedbacker'
-  end
 end

@@ -31,17 +31,4 @@ describe 'purchases', :redis => true do
       page.should have_content("#{@credits} credits")
     end
   end
-
-  context 'as mobile user', :facebook => true, :smaato_vcr => true, :js => true do
-    before :each do
-      @current_user_account = facebook_user_account
-      login_facebook_user_account(@current_user_account)
-    end
-
-    it 'must not allow user to purchase of clue points' do
-      visit_home
-      click_link('buy_credits')
-      page.should have_content('Coming soon, credits purchases')
-    end
-  end
 end

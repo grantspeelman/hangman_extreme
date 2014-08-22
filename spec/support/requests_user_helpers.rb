@@ -1,6 +1,3 @@
-def facebook_user_account(params_or_uid = '1234567')
-  generate_user_account('facebook',params_or_uid)
-end
 
 def mxit_user_account(params_or_uid = 'm2604100')
   generate_user_account('mxit',params_or_uid)
