@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe FeedbackController do
-
   before :each do
     @current_user_account = create(:user_account)
     @ability = Object.new
@@ -13,7 +12,6 @@ describe FeedbackController do
   end
 
   describe 'GET index' do
-
     def do_get_index
       get :index
     end
@@ -22,11 +20,9 @@ describe FeedbackController do
       do_get_index
       response.should be_success
     end
-
   end
 
   describe 'GET new' do
-
     def do_get_new
       get :new
     end
@@ -35,11 +31,12 @@ describe FeedbackController do
       do_get_new
       response.should be_success
     end
-
   end
 
   describe 'POST create' do
-
+    before :each do
+      SendFeedbackToUservoice.stub(:perform)
+    end
     let(:last_feedback){Feedback.last}
 
     def do_create(type = nil)
@@ -47,25 +44,29 @@ describe FeedbackController do
     end
 
     it 'must send support feedback' do
-      do_create
-      last_feedback.support_type == 'support'
+      do_create 'support'
+      last_feedback.support_type.should  == 'support'
     end
 
     it 'must send suggestion feedback' do
       do_create 'suggestion'
-      last_feedback.support_type == 'suggestion'
+      last_feedback.support_type.should  == 'suggestion'
     end
 
     it 'must set feedback to current user' do
       do_create
-      last_feedback.user_account == @current_user_account
+      last_feedback.user_account.should  == @current_user_account
+    end
+
+    it 'must set feedback to app name' do
+      request.env['HTTP_X_MXIT_APP_NAME'] = 'werewolf'
+      do_create
+      last_feedback.app_name.should == 'werewolf'
     end
 
     it 'redirects to home' do
       do_create
       response.should redirect_to(root_path)
     end
-
   end
-
 end

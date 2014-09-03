@@ -30,7 +30,7 @@ class Feedback < ActiveRecord::Base
   protected
 
   def send_to_uservoice
-    SendFeedbackToUservoice.new.perform(self)
+    SendFeedbackToUservoice.perform(self)
   end
 end
 

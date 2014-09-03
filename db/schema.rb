@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122150229) do
+ActiveRecord::Schema.define(version: 20140902194026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,7 @@ ActiveRecord::Schema.define(version: 20140122150229) do
     t.string   "support_type",    default: "suggestion"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "app_name"
   end
 
   add_index "feedback", ["user_account_id"], name: "index_feedback_on_user_account_id", using: :btree

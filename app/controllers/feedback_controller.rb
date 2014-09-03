@@ -10,6 +10,7 @@ class FeedbackController < ApplicationController
   end
 
   def create
+    @feedback.app_name = request.env['HTTP_X_MXIT_APP_NAME']
     @feedback.user_account = current_user_account
     @feedback.save
     redirect_to(root_path, notice: 'Thank you for your feedback')
