@@ -66,7 +66,7 @@ describe FeedbackController do
 
     it 'redirects to home' do
       do_create
-      response.should redirect_to(root_path)
+      response.should redirect_to('/feedback')
     end
   end
 end
